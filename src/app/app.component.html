@@ -17,16 +17,8 @@
   </header>
   <div class="content-container">
     <!-- <router-outlet></router-outlet> -->
-
-    <ag-grid-angular
-        #agGrid
-        style="height: 100%; width: 100%"
-        class="ag-theme-balham"
-        [rowData]="rowData | async"
-        [columnDefs]="columnDefs"
-        [frameworkComponents]="frameworkComponents"
-      ></ag-grid-angular> 
-
+    <okb-transaction-list></okb-transaction-list>
+    
     <nav class="sidenav">
       <section class="sidenav-content">
         <a class="nav-link">Nav 1</a>

@@ -1,0 +1,13 @@
+<ag-grid-angular
+  #agGrid
+  style="height: 100%; width: 100%"
+  class="ag-theme-material"
+  [rowData]="rowData | async"
+  [columnDefs]="columnDefs"
+  [frameworkComponents]="frameworkComponents"
+  [pinnedTopRowData]="newTransactionData"
+  [context]="context"
+  [getRowHeight]="getRowHeight"
+  (gridReady)="onGridReady($event)"
+  >
+</ag-grid-angular>

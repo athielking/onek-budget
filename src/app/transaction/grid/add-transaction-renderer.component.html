@@ -1,0 +1,71 @@
+<div *ngIf="!expanded" class="flex-row flex-center">
+    <button class="btn btn-sm" (click)="toggleTransactionForm(true)">Add Transaction</button>
+</div>
+
+<ng-container *ngIf="expanded">
+    <div class="flex-row">
+        <h3 class="flex">Add Transaction</h3>
+        <button mat-icon-button type="button" (click)="toggleTransactionForm(false)">
+            <mat-icon>clear</mat-icon>
+        </button>
+    </div>
+
+    <div  class="flex-row flex-center flex">
+        <form class="flex-column flex" [formGroup]="form" (ngSubmit)="onSubmit()" >
+
+            <div class="flex-row">
+                <mat-form-field style="width: 150px;">
+                    <input #dateInput matInput placeholder="Date" formControlName="date" tabindex="1" [matDatepicker]="picker"/>
+                    <mat-datepicker-toggle tabindex="0" matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field style="width: 150px;">
+                    <input #payeeInput matInput formControlName="payee" placeholder="Paid To" tabindex="2"/>
+                </mat-form-field>
+
+                <mat-form-field style="width: 150px;">
+                    <input #amountInput matInput formControlName="amount" placeholder="Amount" tabindex="3" />
+                </mat-form-field>
+
+                <mat-form-field style="width: 100px;">
+                        <mat-select #transType placeholder="Type" formControlName="type" tabindex="4">
+                            <mat-option *ngFor="let item of transactionTypes" [value]="item">{{item}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+    
+                    <mat-form-field style="width: 160px;">
+                        <input
+                            #major
+                            matInput
+                            formControlName="majorcategory"
+                            placeholder="Major Category"
+                            tabindex="5"
+                            [matAutocomplete]="majorAuto"/>
+                        <mat-autocomplete #majorAuto="matAutocomplete">
+                            <mat-option *ngFor="let item of (categoriesStore.majorCategories$ | async)" [value]="item">{{item}}</mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                    
+    
+                    <mat-form-field style="width: 160px;">
+                        <input
+                            #minor               
+                            matInput
+                            placeholder="Minor Category"
+                            formControlName="subcategory"
+                            tabindex="6"
+                            [matAutocomplete]="minorAuto"/>
+                        <mat-autocomplete #minorAuto="matAutocomplete">
+                            <mat-option *ngFor="let item of subCategories" [value]="item">{{item}}</mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+            </div>
+            <div class="flex-row reverse">
+                <button type="submit" class="btn btn-primary" tabindex="7">
+                    <clr-icon shape="plus"></clr-icon> Add
+                </button>
+            </div>
+        </form>
+    </div>
+</ng-container>

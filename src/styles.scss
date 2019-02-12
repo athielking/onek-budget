@@ -1,7 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
-@import "~ag-grid-community/dist/styles/ag-grid.css";
-@import "~ag-grid-community/dist/styles/ag-theme-balham.css";
+@import '~@angular/material/theming';
+@import './palette.scss';
 
+@include mat-core();
+
+$primary: mat-palette($md-clrprimary);
+$accent:  mat-palette($md-clraccent, A200, A100, A400);
+
+$theme: mat-light-theme($primary, $accent);
+
+@include angular-material-theme($theme);
+
+$ag-mat-icons-path: "../node_modules/ag-grid-community/src/styles/ag-theme-material/icons/";
+$ag-icons-path: "../node_modules/ag-grid-community/src/styles/ag-theme-base/icons/";
+
+$primary-color: #0095d3;
+
+@import '~ag-grid-community/src/styles/ag-grid';
+@import '~ag-grid-community/src/styles/ag-theme-material/sass/ag-theme-material';
 
 .rag-red {
     background-color: lightcoral;
@@ -12,4 +28,36 @@
 
 .content-container {
     height: 100%
+}
+
+%display-flex {
+    display: flex;
+}
+
+.flex-row {
+    @extend %display-flex;
+    flex-direction: row;
+}
+
+.flex-row.reverse {
+    flex-direction: row-reverse;
+}
+
+
+.flex-column {
+    @extend %display-flex;
+    flex-direction: column;
+}
+
+.flex-column.reverse {
+    flex-direction: column-reverse;
+}
+
+.flex {
+    flex: 1;
+}
+
+.flex-center {
+    justify-content: center;
+    justify-items: center;
 }
