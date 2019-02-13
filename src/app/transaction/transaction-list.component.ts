@@ -12,6 +12,7 @@ import { CategoriesStore } from './categories.store';
 import { DateRendererComponent } from './grid/date-renderer.component';
 import { CurrencyRendererComponent } from './grid/currency-renderer.component';
 import { rendererTypeName } from '@angular/compiler';
+import { TransactionStore } from './transaction.store';
 
 
 @Component({
@@ -30,7 +31,7 @@ export class TransactionListComponent implements OnInit {
   private gridApi;
   private columnApi;
 
-  constructor(private transactionService: TransactionService,
+  constructor(private transactionStore: TransactionStore,
               private categoriesStore: CategoriesStore,
               private domRef: ElementRef,
               private renderer: Renderer2) { }
@@ -46,7 +47,8 @@ export class TransactionListComponent implements OnInit {
       new Transaction()
     ];
 
-    this.rowData = this.transactionService.getTransactions();
+    this.rowData = this.transactionStore.transactions$;
+    this.transactionStore.getTransactions();
   }
 
   private getGridView() {
