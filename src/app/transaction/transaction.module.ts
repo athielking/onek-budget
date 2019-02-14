@@ -12,6 +12,10 @@ import { SelectEditorComponent } from './grid/select-editor.component';
 import { AutocompleteEditorComponent } from './grid/autocomplete-editor.component';
 import { DateRendererComponent } from './grid/date-renderer.component';
 import { CurrencyRendererComponent } from './grid/currency-renderer.component';
+import { TransactionHeaderComponent } from './transaction-header.component';
+import { CategoriesService } from './categories.service';
+import { TransactionStore } from './transaction.store';
+import { CategoriesStore } from './categories.store';
 
 
 @NgModule({
@@ -23,6 +27,7 @@ import { CurrencyRendererComponent } from './grid/currency-renderer.component';
     SelectEditorComponent,
     AutocompleteEditorComponent,
     CurrencyRendererComponent,
+    TransactionHeaderComponent,
   ],
   imports: [
     CommonModule,
@@ -39,7 +44,10 @@ import { CurrencyRendererComponent } from './grid/currency-renderer.component';
     ]),
   ],
   providers: [
-      TransactionService
+      TransactionService,
+      CategoriesService,
+      TransactionStore,
+      CategoriesStore
   ],
   bootstrap: [],
   exports: [

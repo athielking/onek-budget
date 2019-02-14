@@ -21,3 +21,7 @@ export const PERIOD = 190;
 export function isDigitKey(keyCode: number) {
     return keyCode >= DIGIT_0 && keyCode <= DIGIT_9;
 }
+
+export namespace StorageKeys {
+    export const viewDate = 'VIEW_DATE';
+}

@@ -1,47 +1,54 @@
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
+import { merge, map } from 'rxjs/operators';
 import { Transaction } from '../models/transaction.model';
 import { TransactionService } from './transaction.service';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
+import { CategoriesService } from './categories.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoriesStore {
 
-  public majorCategories$: Observable<string[]>;
-  public minorCategories$: Observable<Map<string, string[]>>;
-  private transactions$: Observable<Transaction[]>;
+  private _majorCategories: BehaviorSubject<string[]> = new BehaviorSubject([]);
+  private _majorCategory: BehaviorSubject<string> = new BehaviorSubject('');
 
-  constructor(private transactionService: TransactionService) {
-    this.transactions$ = transactionService.getTransactions();
+  private _minorCategories: BehaviorSubject<Map<string, string[]>> = new BehaviorSubject(new Map<string, string[]>());
+  private _minorCategory: BehaviorSubject<string[]> = new BehaviorSubject([]);
 
-    this.majorCategories$ = this.transactions$.pipe(
-      map(trans => trans.map(t => t.majorcategory).filter((v, i, a) => a.indexOf(v) === i)));
+  public majorCategories$: Observable<string[]> = this._majorCategories.asObservable();
+  public minorCategories$: Observable<Map<string, string[]>> = this._minorCategories.asObservable();
 
-    this.minorCategories$ = this.transactions$.pipe(map(trans => {
-      const subCategories = new Map<string, string[]>();
+  public majorCategory$: Observable<string> = this._majorCategory.asObservable();
+  public minorCategory$: Observable<string[]>;
 
-      trans.forEach( t => {
-        if (!subCategories.has(t.majorcategory)) {
-          subCategories.set(t.majorcategory, []);
-        }
+  constructor(private categoriesService: CategoriesService) {
 
-        const arry = subCategories.get(t.majorcategory);
-        if ( arry.indexOf( t.subcategory ) < 0) {
-          arry.push(t.subcategory);
-          subCategories.set(t.majorcategory, arry);
-        }
-      });
+    this.minorCategory$ = combineLatest(this.majorCategory$, this.minorCategories$).pipe(map( value => {
+      const key = <string>value[0];
+      const values = <Map<string, string[]>>value[1];
 
-      return subCategories;
+      if (values && values.has(key)) {
+        return values.get(key);
+      }
+      return [];
     }));
-
   }
 
-  public getMinorCategories(rowData: Transaction): Observable<string[]> {
-    return this.minorCategories$.pipe(map(m => m.has(rowData.majorcategory) ? m.get(rowData.majorcategory) : []));
+  public loadCategories() {
+    this.getMajorCategories();
+    this.getMinorCategories();
   }
 
+  public getMajorCategories() {
+    this.categoriesService.getMajorCategories().subscribe( (values: string[]) => this._majorCategories.next(values));
+  }
 
+  public getMinorCategories() {
+    this.categoriesService.getMinorCategories().subscribe( (values: Map<string, string[]>) => this._minorCategories.next(values));
+  }
+
+  public setMajorCategory(category: string) {
+    this._majorCategory.next(category);
+  }
 }

@@ -44,6 +44,12 @@ export class AutocompleteEditorComponent implements AgEditorComponent, AfterView
     this.colDef = params.column.getColDef();
     this.items$ = params.valuesFn(params.node.data);
     this.textControl.setValue(params.value);
+
+    this.textControl.valueChanges.subscribe( value => {
+      if ( params.valueChanged ) {
+        params.valueChanged(value);
+      }
+    });
   }
 
   ngAfterViewChecked() {

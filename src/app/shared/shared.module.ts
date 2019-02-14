@@ -5,6 +5,7 @@ import { CoreModule } from '../core/core.module';
 import { MatDatepickerModule, MatInputModule, MatFormFieldModule,
          MatSelectModule, MatAutocompleteModule, MatButtonModule, MatIconModule } from '@angular/material';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { StorageService } from './storage.service';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
     MatDatepickerModule, MatInputModule, MatMomentDateModule, MatFormFieldModule, MatSelectModule, MatAutocompleteModule, MatButtonModule,
     MatIconModule
   ],
-  providers: [],
+  providers: [StorageService],
   bootstrap: [],
   exports: [
     CoreModule,

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Renderer2, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer2, HostListener, QueryList, ViewChildren, AfterViewInit } from '@angular/core';
 import { Observable, from, of } from 'rxjs';
 import { Transaction } from '../models/transaction.model';
 import { AddTransactionRendererComponent } from './grid/add-transaction-renderer.component';
@@ -34,7 +34,7 @@ export class TransactionListComponent implements OnInit {
   constructor(private transactionStore: TransactionStore,
               private categoriesStore: CategoriesStore,
               private domRef: ElementRef,
-              private renderer: Renderer2) { }
+              private renderer: Renderer2) {}
 
   onGridReady(params) {
 
@@ -49,6 +49,7 @@ export class TransactionListComponent implements OnInit {
 
     this.rowData = this.transactionStore.transactions$;
     this.transactionStore.getTransactions();
+    this.categoriesStore.loadCategories();
   }
 
   private getGridView() {
@@ -95,7 +96,8 @@ export class TransactionListComponent implements OnInit {
           width: 160,
           cellEditor: 'autocompleteEditor',
           cellEditorParams: {
-            valuesFn: (rowData) => this.categoriesStore.majorCategories$
+            valuesFn: (rowData) => this.categoriesStore.majorCategories$,
+            valueChanged: (value) => this.categoriesStore.setMajorCategory(value)
           },
           suppressKeyboardEvent: this.suppressKeyboardEvent
         },
@@ -106,7 +108,7 @@ export class TransactionListComponent implements OnInit {
           width: 160,
           cellEditor: 'autocompleteEditor',
           cellEditorParams: {
-            valuesFn: (rowData) => this.categoriesStore.getMinorCategories(rowData)
+            valuesFn: (rowData) => this.categoriesStore.minorCategory$
           },
           suppressKeyboardEvent: this.suppressKeyboardEvent
         },
@@ -134,7 +136,7 @@ export class TransactionListComponent implements OnInit {
 
   public getRowHeight(params) {
     if (params.node.rowPinned) {
-      return 38;
+      return 0;
     }
 
     return 48;
@@ -144,9 +146,15 @@ export class TransactionListComponent implements OnInit {
     const pinnedHeader = this.domRef.nativeElement.querySelectorAll('.ag-floating-top');
     if (expanded) {
       this.renderer.setStyle(pinnedHeader[0], 'height', '200px');
+      this.renderer.setStyle(pinnedHeader[0], 'display', 'inherit');
     } else {
-      this.renderer.setStyle(pinnedHeader[0], 'height', '38px');
+      this.renderer.setStyle(pinnedHeader[0], 'height', '0px');
     }
+
+    const pinnedNode = this.gridApi.getPinnedTopRow(0);
+    pinnedNode.setRowHeight(expanded ? 198 : 0);
+
+    this.gridApi.onRowHeightChanged();
   }
 
   private suppressKeyboardEvent(params) {

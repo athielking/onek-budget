@@ -33,9 +33,7 @@ export class AddTransactionRendererComponent implements ICellRendererAngularComp
   public subCategories: string[] = [];
   public minorMap: Map<string, string[]>;
 
-  public expanded = false;
   public params: any;
-  public onExpand = new EventEmitter<boolean>();
 
   private operators = ['.', '(', ')', '*', '-', '+', '/'];
   constructor(public categoriesStore: CategoriesStore,
@@ -48,12 +46,14 @@ export class AddTransactionRendererComponent implements ICellRendererAngularComp
   ngOnInit() {
     this.initialState = this.form.value;
 
-    this.categoriesStore.minorCategories$.subscribe(m => this.minorMap = m);
+     // this.categoriesStore.minorCategories$.subscribe(m => this.minorMap = m);
 
     this.form.controls.majorcategory.valueChanges.subscribe( value => {
-      if ( this.minorMap.has(value) ) {
-        this.subCategories = this.minorMap.get(value);
-      }
+      this.categoriesStore.setMajorCategory(value);
+
+      // if ( this.minorMap.has(value) ) {
+      //   this.subCategories = this.minorMap.get(value);
+      // }
     });
 
     this.form.controls.amount.valueChanges.subscribe( (value) => {
@@ -105,12 +105,6 @@ export class AddTransactionRendererComponent implements ICellRendererAngularComp
   }
 
   toggleTransactionForm(expanded: boolean) {
-    this.expanded = expanded;
-
-    const height = this.expanded ? 198 : 36;
-    this.params.node.setRowHeight(height);
-    this.params.api.onRowHeightChanged();
-
     this.params.context.parent.togglePinnedDiv(expanded);
   }
 
