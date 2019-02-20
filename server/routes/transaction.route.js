@@ -1,0 +1,44 @@
+const express = require('express');
+const passport = require('passport');
+const asyncHandler = require('express-async-handler');
+const tranCtrl = require('../controllers/transaction.controller');
+
+const router = express.Router();
+module.exports = router;
+
+//router.use(passport.authenticate('jwt', { session: false }))
+
+router.route('/')
+  .post(asyncHandler(insert))
+  .get(asyncHandler(getAll));
+
+router.route('/:id')
+  .get(asyncHandler(get))
+  .put(asyncHandler(put))
+  .delete(asyncHandler(remove));
+  
+
+
+async function insert(req, res) {
+  let user = await tranCtrl.insert(req.body);
+  res.json(user);
+}
+
+async function getAll(req, res) {
+  let users = await tranCtrl.getAll();
+  res.json(users);
+}
+
+async function get(req, res) {
+  let tran = await tranCtrl.get(req.params['id'])
+  res.json(tran);
+}
+
+async function put(req, res) {
+  let tran = await tranCtrl.put(req.params['id'], req.body);
+  res.json(tran);
+}
+
+async function remove(req, res) {
+  await tranCtrl.remove(req.params['id']);
+}

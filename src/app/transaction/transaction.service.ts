@@ -11,22 +11,17 @@ import { Moment } from 'moment';
 })
 export class TransactionService {
 
-  private serviceUri = 'https://api.myjson.com/bins/za91w';
+  private serviceUri = 'http://localhost:4040/api/trans';
   constructor(private httpClient: HttpClient) { }
 
   public getTransactions( viewDate: Moment ) {
     return this.httpClient.get(this.serviceUri).pipe(
-      map( (data: Object[]) => data.map( el => new Transaction({
-        account: el['account'],
-        amount: +el['amount'],
-         date: moment(el['date'], 'MM/DD/YYYY'),
-        description: el['description'],
-        id: el['id'],
-        majorcategory: el['majorcategory'],
-        subcategory: el['subcategory'],
-        payee: el['payee'],
-        type: <TransactionType>el['type']
-      })).filter( trans => trans.date.month === viewDate.month))
+      map( (data: Object[]) => data.map( el => {
+        if (el['date']) {
+          el['date'] = moment(el['date']);
+        }
+        return new Transaction(el);
+      }).filter( trans => trans.date.month === viewDate.month))
     );
   }
 

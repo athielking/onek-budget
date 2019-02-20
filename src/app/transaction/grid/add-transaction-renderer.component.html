@@ -37,8 +37,8 @@
                         <input
                             #major
                             matInput
-                            formControlName="majorcategory"
-                            placeholder="Major Category"
+                            formControlName="category"
+                            placeholder="Category"
                             tabindex="5"
                             [matAutocomplete]="majorAuto"/>
                         <mat-autocomplete #majorAuto="matAutocomplete">
@@ -51,7 +51,7 @@
                         <input
                             #minor               
                             matInput
-                            placeholder="Minor Category"
+                            placeholder="Sub-Category"
                             formControlName="subcategory"
                             tabindex="6"
                             [matAutocomplete]="minorAuto"/>

@@ -37,9 +37,13 @@ export class TransactionStore {
   }
 
   public addTransaction(transaction: Transaction) {
-    let value = this._transactions.getValue();
+    const values = this._transactions.getValue();
 
-    value = [...value, transaction];
-    this._transactions.next(value);
+    this._transactions.next([...values, transaction]);
+
+    this.transactionService.addTransaction(transaction).subscribe( (result: any) => {
+      transaction._id = result['_id'];
+      this._transactions.next([...values, transaction]);
+    });
   }
 }

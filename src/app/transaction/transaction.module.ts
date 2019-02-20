@@ -16,6 +16,7 @@ import { TransactionHeaderComponent } from './transaction-header.component';
 import { CategoriesService } from './categories.service';
 import { TransactionStore } from './transaction.store';
 import { CategoriesStore } from './categories.store';
+import { StatusRendererComponent } from './grid/status-renderer.component';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { CategoriesStore } from './categories.store';
     AutocompleteEditorComponent,
     CurrencyRendererComponent,
     TransactionHeaderComponent,
+    StatusRendererComponent
   ],
   imports: [
     CommonModule,
@@ -40,7 +42,8 @@ import { CategoriesStore } from './categories.store';
         DateEditorComponent,
         SelectEditorComponent,
         AutocompleteEditorComponent,
-        CurrencyRendererComponent
+        CurrencyRendererComponent,
+        StatusRendererComponent
     ]),
   ],
   providers: [

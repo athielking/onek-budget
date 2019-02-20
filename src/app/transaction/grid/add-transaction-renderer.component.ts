@@ -25,7 +25,7 @@ export class AddTransactionRendererComponent implements ICellRendererAngularComp
       validators: [Validators.required]
     }),
     type: new FormControl(TransactionType.Optional),
-    majorcategory: new FormControl(''),
+    category: new FormControl(''),
     subcategory: new FormControl('')
   });
 
@@ -48,7 +48,7 @@ export class AddTransactionRendererComponent implements ICellRendererAngularComp
 
      // this.categoriesStore.minorCategories$.subscribe(m => this.minorMap = m);
 
-    this.form.controls.majorcategory.valueChanges.subscribe( value => {
+    this.form.controls.category.valueChanges.subscribe( value => {
       this.categoriesStore.setMajorCategory(value);
 
       // if ( this.minorMap.has(value) ) {
@@ -93,7 +93,7 @@ export class AddTransactionRendererComponent implements ICellRendererAngularComp
       return;
     }
 
-    if (this.operators.findIndex( o => o === event.key) > 0 ) {
+    if (this.operators.findIndex( o => o === event.key) >= 0 ) {
       return;
     }
 
@@ -109,7 +109,14 @@ export class AddTransactionRendererComponent implements ICellRendererAngularComp
   }
 
   onSubmit() {
-    this.transactionStore.addTransaction(new Transaction(this.form.value));
+    const tran = new Transaction(this.form.value);
+    tran.amount = Math.abs(tran.amount);
+
+    if ( tran.type !== TransactionType.Income) {
+      tran.amount *= -1;
+    }
+
+    this.transactionStore.addTransaction(tran);
     this.form.reset(this.initialState);
   }
 }

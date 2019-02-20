@@ -5,6 +5,12 @@ export enum TransactionType {
     Transfer = 'Transfer'
 }
 
+export enum TransactionStatus {
+    Success = 'success',
+    Pending = 'pending',
+    Error = 'error'
+}
+
 export const BACKSPACE = 8;
 export const SPACE = 32;
 export const KEY_LEFT = 37;

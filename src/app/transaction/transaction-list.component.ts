@@ -13,6 +13,7 @@ import { DateRendererComponent } from './grid/date-renderer.component';
 import { CurrencyRendererComponent } from './grid/currency-renderer.component';
 import { rendererTypeName } from '@angular/compiler';
 import { TransactionStore } from './transaction.store';
+import { StatusRendererComponent } from './grid/status-renderer.component';
 
 
 @Component({
@@ -91,7 +92,7 @@ export class TransactionListComponent implements OnInit {
         },
         {
           headerName: 'Major Category',
-          field: 'majorcategory',
+          field: 'category',
           editable: true,
           width: 160,
           cellEditor: 'autocompleteEditor',
@@ -112,6 +113,13 @@ export class TransactionListComponent implements OnInit {
           },
           suppressKeyboardEvent: this.suppressKeyboardEvent
         },
+        {
+          field: 'status',
+          editable: false,
+          width: 60,
+          cellRenderer: 'statusRenderer',
+          suppressKeyboardEvent: this.suppressKeyboardEvent
+        },
     ];
   }
 
@@ -123,14 +131,14 @@ export class TransactionListComponent implements OnInit {
           selectEditor: SelectEditorComponent,
           autocompleteEditor: AutocompleteEditorComponent,
           currencyRenderer: CurrencyRendererComponent,
+          statusRenderer: StatusRendererComponent,
       };
   }
 
   private getColSpan(params: ColSpanParams): number {
     if (params.node.rowPinned === 'top') {
-      return 6;
+      return 7;
     }
-
     return 1;
   }
 
