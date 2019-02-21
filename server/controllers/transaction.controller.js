@@ -1,6 +1,7 @@
 
 const Joi = require('joi');
 const Transaction = require('../models/transaction.model');
+const moment = require('moment');
 
 const transactionSchema = Joi.object({
   date: Joi.date().required(Joi.ref('date')),
@@ -14,9 +15,11 @@ const transactionSchema = Joi.object({
 
 module.exports = {
   insert,
-  get,
   getAll,
+  get,
+  getByDate,
   put,
+  patch,
   remove
 }
 
@@ -27,17 +30,33 @@ async function insert(transaction) {
 }
 
 async function getAll() {
-  return await Transaction.find({});
+  return await Transaction.find();
 }
 
 async function get(id) {
   return await Transaction.findById(id);
 }
 
+async function getByDate(viewDate) {
+  var start = moment(viewDate).day(1);
+  var end = start.clone().add(1, 'month');
+
+  return await Transaction.find({
+    "date": {
+      "$gte": start.toDate(),
+      "$lt": end.toDate()
+    }
+  });
+}
+
 async function put(id, transaction) {
-  return await Transaction.updateOne({id: id}, transaction);
+  return await Transaction.findByIdAndUpdate(id, transaction);
+}
+
+async function patch(id, changes) {
+  return await Transaction.findByIdAndUpdate(id, {$set: changes});
 }
 
 async function remove(id) {
-  return await Transaction.deleteOne({id: id});
+  return await Transaction.deleteOne({_id: id});
 }

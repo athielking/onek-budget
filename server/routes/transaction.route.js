@@ -15,6 +15,7 @@ router.route('/')
 router.route('/:id')
   .get(asyncHandler(get))
   .put(asyncHandler(put))
+  .patch(asyncHandler(patch))
   .delete(asyncHandler(remove));
   
 
@@ -25,7 +26,13 @@ async function insert(req, res) {
 }
 
 async function getAll(req, res) {
-  let users = await tranCtrl.getAll();
+  let users;
+  if (req.query.date) {
+    users = await tranCtrl.getByDate(req.query.date);
+  } else {
+    users = await tranCtrl.getAll();
+  }
+
   res.json(users);
 }
 
@@ -36,6 +43,11 @@ async function get(req, res) {
 
 async function put(req, res) {
   let tran = await tranCtrl.put(req.params['id'], req.body);
+  res.json(tran);
+}
+
+async function patch(req, res) {
+  let tran = await tranCtrl.patch(req.params['id'], req.body);
   res.json(tran);
 }
 

@@ -13,23 +13,18 @@ export class Transaction {
     public category: string;
     public subcategory: string;
 
-    // private _status: string = TransactionStatus.Pending;
-    get status(): string {
-
-        if (!this._id) {
-            return TransactionStatus.Pending;
-        }
-
-        if (+this._id < 0 ) {
-            return TransactionStatus.Error;
-        }
-
-        return TransactionStatus.Success;
+    public _status: string = TransactionStatus.Pending;
+    get status() {
+        return this._status;
     }
 
     constructor(init?: Partial<Transaction>) {
         if (init) {
             Object.assign(this, init);
+        }
+
+        if (this._id) {
+            this._status = TransactionStatus.Success;
         }
     }
 }

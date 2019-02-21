@@ -1,27 +1,52 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CoreModule } from '../core/core.module';
+import { AgGridModule } from 'ag-grid-angular';
 
-import { MatDatepickerModule, MatInputModule, MatFormFieldModule,
-         MatSelectModule, MatAutocompleteModule, MatButtonModule, MatIconModule } from '@angular/material';
-import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { CoreModule } from '../core/core.module';
 import { StorageService } from './storage.service';
+import { AddTransactionRendererComponent } from './add-transaction-renderer.component';
+import { DateEditorComponent } from './date-editor.component';
+import { SelectEditorComponent } from './select-editor.component';
+import { AutocompleteEditorComponent } from './autocomplete-editor.component';
+import { DateRendererComponent } from './date-renderer.component';
+import { CurrencyRendererComponent } from './currency-renderer.component';
+import { StatusRendererComponent } from './status-renderer.component';
 
 @NgModule({
   declarations: [
+    AddTransactionRendererComponent,
+    DateEditorComponent,
+    DateRendererComponent,
+    SelectEditorComponent,
+    AutocompleteEditorComponent,
+    CurrencyRendererComponent,
+    StatusRendererComponent
   ],
   imports: [
     CommonModule,
     CoreModule,
-    MatDatepickerModule, MatInputModule, MatMomentDateModule, MatFormFieldModule, MatSelectModule, MatAutocompleteModule, MatButtonModule,
-    MatIconModule
+    AgGridModule.withComponents([
+      AddTransactionRendererComponent,
+      DateRendererComponent,
+      DateEditorComponent,
+      SelectEditorComponent,
+      AutocompleteEditorComponent,
+      CurrencyRendererComponent,
+      StatusRendererComponent
+  ]),
   ],
   providers: [StorageService],
   bootstrap: [],
   exports: [
     CoreModule,
-    MatDatepickerModule, MatInputModule, MatMomentDateModule, MatSelectModule, MatAutocompleteModule, MatButtonModule,
-    MatIconModule
+    AgGridModule,
+    AddTransactionRendererComponent,
+    DateEditorComponent,
+    DateRendererComponent,
+    SelectEditorComponent,
+    AutocompleteEditorComponent,
+    CurrencyRendererComponent,
+    StatusRendererComponent
   ]
 })
 export class SharedModule { }

@@ -19,11 +19,11 @@ $primary-color: #0095d3;
 @import '~ag-grid-community/src/styles/ag-grid';
 @import '~ag-grid-community/src/styles/ag-theme-material/sass/ag-theme-material';
 
-.rag-red {
-    background-color: lightcoral;
+.spent-transaction {
+    background-color: #F5DBD9;
 }
-.rag-green {
-    background-color: lightgreen;
+.income-transaction {
+    background-color: #DFF0D0;
 }
 
 .content-container {

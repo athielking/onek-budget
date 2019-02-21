@@ -1,30 +1,21 @@
-import { Component, OnInit, ViewChild, ElementRef, Renderer2, HostListener, QueryList, ViewChildren, AfterViewInit } from '@angular/core';
-import { Observable, from, of } from 'rxjs';
+import { Component, OnInit, ElementRef, Renderer2 } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import { Transaction } from '../models/transaction.model';
-import { AddTransactionRendererComponent } from './grid/add-transaction-renderer.component';
 import { ColSpanParams } from 'ag-grid-community';
-import { TransactionService } from './transaction.service';
-import { DateEditorComponent } from './grid/date-editor.component';
 import { TransactionType, BACKSPACE, DELETE } from '../shared/constants';
-import { SelectEditorComponent } from './grid/select-editor.component';
-import { AutocompleteEditorComponent } from './grid/autocomplete-editor.component';
 import { CategoriesStore } from './categories.store';
-import { DateRendererComponent } from './grid/date-renderer.component';
-import { CurrencyRendererComponent } from './grid/currency-renderer.component';
-import { rendererTypeName } from '@angular/compiler';
 import { TransactionStore } from './transaction.store';
-import { StatusRendererComponent } from './grid/status-renderer.component';
-
+import { AgGridHelper } from '../shared/ag-grid.helper';
 
 @Component({
   selector: 'okb-transaction-list',
-  templateUrl: './transaction-list.component.html',
-  styleUrls: ['./transaction-list.component.scss']
+  templateUrl: './transaction-list.component.html'
 })
 export class TransactionListComponent implements OnInit {
 
   columnDefs = this.getGridView();
-  frameworkComponents = this.getFrameworkComponents();
+  frameworkComponents = AgGridHelper.getFrameworkComponents();
+
   rowData: Observable<Transaction[]>;
   newTransactionData: Transaction[] = [];
   context = { parent: this };
@@ -42,6 +33,11 @@ export class TransactionListComponent implements OnInit {
     this.gridApi = params.api;
     this.columnApi = params.columnApi;
   }
+
+  onCellValueChanged(params) {
+    this.transactionStore.queueChange(params.data['_id'], {[params.colDef.field]: params.newValue});
+  }
+
   ngOnInit() {
 
     this.newTransactionData = [
@@ -64,20 +60,20 @@ export class TransactionListComponent implements OnInit {
           pinnedRowCellRenderer: 'addTransaction',
           cellEditor: 'dateEditor',
           cellRenderer: 'dateRenderer',
-          suppressKeyboardEvent: this.suppressKeyboardEvent
+          suppressKeyboardEvent: AgGridHelper.suppressKeyboardEvent
         },
-        {headerName: 'Paid To', field: 'payee', editable: true, width: 200, suppressKeyboardEvent: this.suppressKeyboardEvent},
+        {headerName: 'Paid To', field: 'payee', editable: true, width: 200, suppressKeyboardEvent: AgGridHelper.suppressKeyboardEvent},
         {
           headerName: 'Amount',
           field: 'amount',
           editable: true,
           width: 200,
           cellClassRules: {
-            'rag-green' : 'x > 0',
-            'rag-red' : 'x < 0'
+            'income-transaction' : 'x > 0',
+            'spent-transaction' : 'x < 0'
           },
           cellRenderer: 'currencyRenderer',
-          suppressKeyboardEvent: this.suppressKeyboardEvent
+          suppressKeyboardEvent: AgGridHelper.suppressKeyboardEvent
         },
         {
           headerName: 'Type',
@@ -88,7 +84,7 @@ export class TransactionListComponent implements OnInit {
           cellEditorParams: {
             valuesFn: (rowData) => of(Object.keys(TransactionType))
           },
-          suppressKeyboardEvent: this.suppressKeyboardEvent
+          suppressKeyboardEvent: AgGridHelper.suppressKeyboardEvent
         },
         {
           headerName: 'Major Category',
@@ -100,7 +96,7 @@ export class TransactionListComponent implements OnInit {
             valuesFn: (rowData) => this.categoriesStore.majorCategories$,
             valueChanged: (value) => this.categoriesStore.setMajorCategory(value)
           },
-          suppressKeyboardEvent: this.suppressKeyboardEvent
+          suppressKeyboardEvent: AgGridHelper.suppressKeyboardEvent
         },
         {
           headerName: 'Minor Category',
@@ -111,28 +107,16 @@ export class TransactionListComponent implements OnInit {
           cellEditorParams: {
             valuesFn: (rowData) => this.categoriesStore.minorCategory$
           },
-          suppressKeyboardEvent: this.suppressKeyboardEvent
+          suppressKeyboardEvent: AgGridHelper.suppressKeyboardEvent
         },
         {
           field: 'status',
           editable: false,
           width: 60,
           cellRenderer: 'statusRenderer',
-          suppressKeyboardEvent: this.suppressKeyboardEvent
+          suppressKeyboardEvent: AgGridHelper.suppressKeyboardEvent
         },
     ];
-  }
-
-  private getFrameworkComponents() {
-    return {
-          addTransaction : AddTransactionRendererComponent,
-          dateRenderer: DateRendererComponent,
-          dateEditor: DateEditorComponent,
-          selectEditor: SelectEditorComponent,
-          autocompleteEditor: AutocompleteEditorComponent,
-          currencyRenderer: CurrencyRendererComponent,
-          statusRenderer: StatusRendererComponent,
-      };
   }
 
   private getColSpan(params: ColSpanParams): number {
@@ -165,8 +149,4 @@ export class TransactionListComponent implements OnInit {
     this.gridApi.onRowHeightChanged();
   }
 
-  private suppressKeyboardEvent(params) {
-    return params.event.keyCode === BACKSPACE ||
-      params.event.keyCode === DELETE;
-  }
 }

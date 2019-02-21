@@ -15,7 +15,8 @@ export class TransactionService {
   constructor(private httpClient: HttpClient) { }
 
   public getTransactions( viewDate: Moment ) {
-    return this.httpClient.get(this.serviceUri).pipe(
+
+    return this.httpClient.get(this.serviceUri + `?date=${viewDate.format('YYYY-MM-DD')}`).pipe(
       map( (data: Object[]) => data.map( el => {
         if (el['date']) {
           el['date'] = moment(el['date']);
@@ -26,6 +27,19 @@ export class TransactionService {
   }
 
   public addTransaction(transaction: Transaction) {
+    delete transaction._status;
+
     return this.httpClient.post(this.serviceUri, transaction).pipe(shareReplay());
+  }
+
+  public patchTransaction(id: string, changes: any) {
+    return this.httpClient.patch(this.serviceUri + `/${id}`, changes)
+      .pipe(shareReplay(),
+        map(trans => {
+          if (trans['date']) {
+            trans['date'] = moment(trans['date']);
+          }
+          return new Transaction(trans);
+        }));
   }
 }
