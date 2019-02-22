@@ -1,8 +1,26 @@
-<nav class="subnav">
+<!-- <nav class="subnav">
   <div class="flex-row flex" style="margin-left: 8px;">
     <button class="btn btn-sm" (click)="togglePinnedDiv(true)">Add Transaction Template</button>
   </div>
-</nav>
+</nav> -->
+
+  <div class="card" style="margin-bottom: 1rem">
+    <div class="card-header">
+        Transaction Templates
+    </div>
+    <div class="card-block">
+        <div class="card-text">
+            Transaction Templates are used to quickly add recurring monthly transactions; an installment loan or rent for example.
+            You'll still need to manually add each transaction, but you'll be reminded if one of your scheduled transactions does not match a transaction for that month.
+        </div>
+    </div>
+    <div class="card-footer">
+      <button class="btn btn-sm" (click)="togglePinnedDiv(true)">Add Transaction Template</button>
+    </div>
+  </div>
+
+
+
 <ag-grid-angular
   #agGrid
   style="height: 100%; width: 100%"

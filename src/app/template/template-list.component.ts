@@ -1,7 +1,6 @@
 import { Component, OnInit, ElementRef, Renderer2 } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Template } from '../models/template.model';
-import { ColSpanParams } from 'ag-grid-community';
 import { TransactionType } from '../shared/constants';
 import { CategoriesStore } from '../shared/categories.store';
 import { TemplateStore } from './template.store';
@@ -55,11 +54,9 @@ export class TemplateListComponent implements OnInit {
           headerName: 'Day of Month',
           field: 'day',
           editable: true,
-          width: 120,
+          width: 150,
           colSpan: AgGridHelper.getColSpan,
-          // pinnedRowCellRenderer: 'addTemplate',
-          // cellEditor: 'dateEditor',
-          // cellRenderer: 'dateRenderer',
+          pinnedRowCellRenderer: 'addTemplate',
           suppressKeyboardEvent: AgGridHelper.suppressKeyboardEvent
         },
         {
@@ -128,14 +125,14 @@ export class TemplateListComponent implements OnInit {
   public togglePinnedDiv(expanded: boolean) {
     const pinnedHeader = this.domRef.nativeElement.querySelectorAll('.ag-floating-top');
     if (expanded) {
-      this.renderer.setStyle(pinnedHeader[0], 'height', '200px');
+      this.renderer.setStyle(pinnedHeader[0], 'height', '220px');
       this.renderer.setStyle(pinnedHeader[0], 'display', 'inherit');
     } else {
       this.renderer.setStyle(pinnedHeader[0], 'height', '0px');
     }
 
     const pinnedNode = this.gridApi.getPinnedTopRow(0);
-    pinnedNode.setRowHeight(expanded ? 198 : 0);
+    pinnedNode.setRowHeight(expanded ? 218 : 0);
 
     this.gridApi.onRowHeightChanged();
   }

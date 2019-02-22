@@ -6,11 +6,13 @@ import { AutocompleteEditorComponent } from './autocomplete-editor.component';
 import { StatusRendererComponent } from './status-renderer.component';
 import { CurrencyRendererComponent } from './currency-renderer.component';
 import { DELETE, BACKSPACE } from './constants';
+import { AddTemplateRendererComponent } from './add-template-renderer.component';
 
 export namespace AgGridHelper {
     export function getFrameworkComponents() {
         return {
               addTransaction : AddTransactionRendererComponent,
+              addTemplate: AddTemplateRendererComponent,
               dateRenderer: DateRendererComponent,
               dateEditor: DateEditorComponent,
               selectEditor: SelectEditorComponent,

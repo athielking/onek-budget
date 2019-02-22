@@ -1,0 +1,77 @@
+<ng-container>
+    <div class="flex-row">
+        <h3 class="flex">Add Transaction Template</h3>
+        <button mat-icon-button type="button" (click)="toggleTransactionForm(false)">
+            <mat-icon>clear</mat-icon>
+        </button>
+    </div>
+
+    <div  class="flex-row flex-center flex">
+        <form class="flex-column flex" [formGroup]="form" (ngSubmit)="onSubmit()" >
+
+            <div class="flex-row">
+                <mat-form-field style="width: 150px;">
+                    <input required #dayInput matInput formControlName="day" placeholder="Day of Month" tabindex="1" (keypress)="onKeyPress($event)"/>
+                    <mat-hint>Enter a day between 1 and 31</mat-hint>
+                    <mat-error *ngIf="form.controls.day.errors && form.controls.day.errors.required">
+                        Day of Month is Required
+                    </mat-error>
+                    <mat-error *ngIf="form.controls.day.errors && (form.controls.day.errors.min || form.controls.day.errors.max)">
+                        Value must be between 1 and 31
+                    </mat-error>
+                    <mat-error *ngIf="form.controls.day.errors && form.controls.day.errors.pattern">
+                        Value must be a number
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field style="width: 150px;">
+                    <input #payeeInput matInput formControlName="payee" placeholder="Paid To" tabindex="2"/>
+                </mat-form-field>
+
+                <mat-form-field style="width: 150px;">
+                    <input required #amountInput matInput formControlName="amount" placeholder="Amount" tabindex="3" (keypress)="onKeyPress($event)"/>
+                    <mat-hint>Supports basic arithmetic</mat-hint>
+                    <mat-error *ngIf="form.controls.amount.errors && form.controls.amount.errors.required">Amount is Required</mat-error>
+                </mat-form-field>
+
+                <mat-form-field style="width: 100px;">
+                        <mat-select #transType placeholder="Type" formControlName="type" tabindex="4">
+                            <mat-option *ngFor="let item of transactionTypes" [value]="item">{{item}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+    
+                    <mat-form-field style="width: 160px;">
+                        <input
+                            #major
+                            matInput
+                            formControlName="category"
+                            placeholder="Category"
+                            tabindex="5"
+                            [matAutocomplete]="majorAuto"/>
+                        <mat-autocomplete #majorAuto="matAutocomplete">
+                            <mat-option *ngFor="let item of (categoriesStore.majorCategories$ | async)" [value]="item">{{item}}</mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                    
+    
+                    <mat-form-field style="width: 160px;">
+                        <input
+                            #minor               
+                            matInput
+                            placeholder="Sub-Category"
+                            formControlName="subcategory"
+                            tabindex="6"
+                            [matAutocomplete]="minorAuto"/>
+                        <mat-autocomplete #minorAuto="matAutocomplete">
+                            <mat-option *ngFor="let item of (categoriesStore.minorCategory$ | async)" [value]="item">{{item}}</mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+            </div>
+            <div class="flex-row reverse">
+                <button type="submit" class="btn btn-primary" tabindex="7" [disabled]="!form.valid">
+                    <clr-icon shape="plus"></clr-icon> Add
+                </button>
+            </div>
+        </form>
+    </div>
+</ng-container>

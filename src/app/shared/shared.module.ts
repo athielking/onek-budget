@@ -13,10 +13,12 @@ import { CurrencyRendererComponent } from './currency-renderer.component';
 import { StatusRendererComponent } from './status-renderer.component';
 import { CategoriesStore } from './categories.store';
 import { CategoriesService } from './categories.service';
+import { AddTemplateRendererComponent } from './add-template-renderer.component';
 
 @NgModule({
   declarations: [
     AddTransactionRendererComponent,
+    AddTemplateRendererComponent,
     DateEditorComponent,
     DateRendererComponent,
     SelectEditorComponent,
@@ -29,6 +31,7 @@ import { CategoriesService } from './categories.service';
     CoreModule,
     AgGridModule.withComponents([
       AddTransactionRendererComponent,
+      AddTemplateRendererComponent,
       DateRendererComponent,
       DateEditorComponent,
       SelectEditorComponent,
