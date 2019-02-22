@@ -11,6 +11,8 @@ import { AutocompleteEditorComponent } from './autocomplete-editor.component';
 import { DateRendererComponent } from './date-renderer.component';
 import { CurrencyRendererComponent } from './currency-renderer.component';
 import { StatusRendererComponent } from './status-renderer.component';
+import { CategoriesStore } from './categories.store';
+import { CategoriesService } from './categories.service';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,7 @@ import { StatusRendererComponent } from './status-renderer.component';
       StatusRendererComponent
   ]),
   ],
-  providers: [StorageService],
+  providers: [StorageService, CategoriesService, CategoriesStore],
   bootstrap: [],
   exports: [
     CoreModule,

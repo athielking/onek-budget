@@ -24,4 +24,14 @@ export namespace AgGridHelper {
         return params.event.keyCode === BACKSPACE ||
             params.event.keyCode === DELETE;
     }
+
+    export function getColSpan(params: any): number {
+
+        if (params.node.rowPinned === 'top') {
+          console.log(params);
+          return params.columnApi.columnController.columnDefs.length;
+        }
+
+        return 1;
+    }
 }

@@ -1,0 +1,18 @@
+<nav class="subnav">
+    <div class="flex-row flex" style="margin-top: 9px; margin-left: 8px;">
+      <button class="btn btn-sm" (click)="togglePinnedDiv(true)">Add Transaction</button>
+      
+      <div class="flex-row reverse flex">
+        <div class="flex-row">
+          <button class="btn btn-link btn-icon" (click)="decreaseViewDate()">
+            <mat-icon>chevron_left</mat-icon>
+          </button>
+          <button class="btn btn-link btn-sm">Feburary</button>
+          <button class="btn btn-link btn-icon"(click)="increaseViewDate()">
+            <mat-icon>chevron_right</mat-icon>
+          </button>
+        </div>
+      </div>
+      <span class="flex"></span>
+    </div>
+  </nav>

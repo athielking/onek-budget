@@ -7,6 +7,8 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { TransactionModule } from './transaction/transaction.module';
+import { TemplateModule } from './template/template.module';
+import { Template } from './models/template.model';
 
 @NgModule({
   declarations: [
@@ -18,8 +20,11 @@ import { TransactionModule } from './transaction/transaction.module';
     CoreModule,
     SharedModule,
     TransactionModule,
+    TemplateModule,
     RouterModule.forRoot([
-
+      { path: '', redirectTo: 'transaction', pathMatch: 'full' },
+      { path: 'transaction', loadChildren: () => TransactionModule },
+      { path: 'template', loadChildren: () => TemplateModule },
     ])
   ],
   providers: [],

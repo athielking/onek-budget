@@ -7,24 +7,22 @@
       </a>
     </div>
     <div class="header-nav">
-      <a class="nav-link nav-icon">
-        <clr-icon shape="wallet"></clr-icon>
+      <a class="nav-link" routerLink="/transaction" routerLinkActive="active">
+        <span class="nav-text">Transactions</span>
       </a>
-      <a class="nav-link nav-icon">
-        <clr-icon shape="objects"></clr-icon>
+      <a class="nav-link" routerLink="/template" routerLinkActive="active">
+        <span class="nav-text">Template Setup</span>
       </a>
     </div>
   </header>
   <div class="content-container">
-    <!-- <router-outlet></router-outlet> -->
-    <okb-transaction-list></okb-transaction-list>
-    
-    <nav class="sidenav">
+    <router-outlet></router-outlet>
+    <!-- <nav class="sidenav">
       <section class="sidenav-content">
-        <a class="nav-link">Nav 1</a>
+        <a class="nav-link" routerLink='/template'>Templates</a>
         <a class="nav-link">Nav 2</a>
       </section>
-    </nav>
+    </nav> -->
   </div>
   
 </div>

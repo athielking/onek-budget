@@ -1,15 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormsModule} from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 import { SharedModule } from '../shared/shared.module';
 
 import { TransactionHeaderComponent } from './transaction-header.component';
 import { TransactionListComponent } from './transaction-list.component';
 import { TransactionService } from './transaction.service';
-import { CategoriesService } from './categories.service';
 import { TransactionStore } from './transaction.store';
-import { CategoriesStore } from './categories.store';
+
 
 @NgModule({
   declarations: [
@@ -19,12 +18,13 @@ import { CategoriesStore } from './categories.store';
   imports: [
     CommonModule,
     SharedModule,
+    RouterModule.forChild([
+      { path: '', component: TransactionListComponent }
+    ])
   ],
   providers: [
       TransactionService,
-      CategoriesService,
-      TransactionStore,
-      CategoriesStore
+      TransactionStore
   ],
   bootstrap: [],
   exports: [

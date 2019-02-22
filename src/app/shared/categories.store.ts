@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { merge, map } from 'rxjs/operators';
 import { Transaction } from '../models/transaction.model';
-import { TransactionService } from './transaction.service';
+import { TransactionService } from '../transaction/transaction.service';
 import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { CategoriesService } from './categories.service';
 

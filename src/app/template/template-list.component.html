@@ -1,0 +1,18 @@
+<nav class="subnav">
+  <div class="flex-row flex" style="margin-left: 8px;">
+    <button class="btn btn-sm" (click)="togglePinnedDiv(true)">Add Transaction Template</button>
+  </div>
+</nav>
+<ag-grid-angular
+  #agGrid
+  style="height: 100%; width: 100%"
+  class="ag-theme-material"
+  [rowData]="rowData | async"
+  [columnDefs]="columnDefs"
+  [frameworkComponents]="frameworkComponents"
+  [pinnedTopRowData]="newTransactionData"
+  [context]="context"
+  [getRowHeight]="getRowHeight"
+  (gridReady)="onGridReady($event)"
+  (cellValueChanged)="onCellValueChanged($event)">
+</ag-grid-angular>

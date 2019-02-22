@@ -1,29 +1,29 @@
 import { Component, OnInit, ElementRef, Renderer2 } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Transaction } from '../models/transaction.model';
+import { Template } from '../models/template.model';
 import { ColSpanParams } from 'ag-grid-community';
-import { TransactionType, BACKSPACE, DELETE } from '../shared/constants';
+import { TransactionType } from '../shared/constants';
 import { CategoriesStore } from '../shared/categories.store';
-import { TransactionStore } from './transaction.store';
+import { TemplateStore } from './template.store';
 import { AgGridHelper } from '../shared/ag-grid.helper';
 
 @Component({
-  selector: 'okb-transaction-list',
-  templateUrl: './transaction-list.component.html'
+  selector: 'okb-template-list',
+  templateUrl: './template-list.component.html'
 })
-export class TransactionListComponent implements OnInit {
+export class TemplateListComponent implements OnInit {
 
   columnDefs = this.getGridView();
   frameworkComponents = AgGridHelper.getFrameworkComponents();
 
-  rowData: Observable<Transaction[]>;
-  newTransactionData: Transaction[] = [];
+  rowData: Observable<Template[]>;
+  newTransactionData: Template[] = [];
   context = { parent: this };
 
   private gridApi;
   private columnApi;
 
-  constructor(private transactionStore: TransactionStore,
+  constructor(private templateStore: TemplateStore,
               private categoriesStore: CategoriesStore,
               private domRef: ElementRef,
               private renderer: Renderer2) {}
@@ -35,34 +35,39 @@ export class TransactionListComponent implements OnInit {
   }
 
   onCellValueChanged(params) {
-    this.transactionStore.queueChange(params.data['_id'], {[params.colDef.field]: params.newValue});
+    this.templateStore.queueChange(params.data['_id'], {[params.colDef.field]: params.newValue});
   }
 
   ngOnInit() {
 
     this.newTransactionData = [
-      new Transaction()
+      new Template()
     ];
 
-    this.rowData = this.transactionStore.transactions$;
-    this.transactionStore.getTransactions();
+    this.rowData = this.templateStore.templates$;
+    this.templateStore.getTemplates();
     this.categoriesStore.loadCategories();
   }
 
   private getGridView() {
     return [
         {
-          headerName: 'Date',
-          field: 'date',
+          headerName: 'Day of Month',
+          field: 'day',
           editable: true,
           width: 120,
           colSpan: AgGridHelper.getColSpan,
-          pinnedRowCellRenderer: 'addTransaction',
-          cellEditor: 'dateEditor',
-          cellRenderer: 'dateRenderer',
+          // pinnedRowCellRenderer: 'addTemplate',
+          // cellEditor: 'dateEditor',
+          // cellRenderer: 'dateRenderer',
           suppressKeyboardEvent: AgGridHelper.suppressKeyboardEvent
         },
-        {headerName: 'Paid To', field: 'payee', editable: true, width: 200, suppressKeyboardEvent: AgGridHelper.suppressKeyboardEvent},
+        {
+          headerName: 'Paid To',
+          field: 'payee',
+          editable: true,
+          width: 200,
+          suppressKeyboardEvent: AgGridHelper.suppressKeyboardEvent},
         {
           headerName: 'Amount',
           field: 'amount',
@@ -108,14 +113,7 @@ export class TransactionListComponent implements OnInit {
             valuesFn: (rowData) => this.categoriesStore.minorCategory$
           },
           suppressKeyboardEvent: AgGridHelper.suppressKeyboardEvent
-        },
-        {
-          field: 'status',
-          editable: false,
-          width: 60,
-          cellRenderer: 'statusRenderer',
-          suppressKeyboardEvent: AgGridHelper.suppressKeyboardEvent
-        },
+        }
     ];
   }
 

@@ -3,7 +3,7 @@ import { ICellRendererAngularComp } from 'ag-grid-angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { TransactionType, DIGIT_0, DIGIT_9, isDigitKey, SPACE } from 'src/app/shared/constants';
-import { CategoriesStore } from '../transaction/categories.store';
+import { CategoriesStore } from './categories.store';
 import { TransactionService } from '../transaction/transaction.service';
 import { Transaction } from 'src/app/models/transaction.model';
 import { TransactionStore } from '../transaction/transaction.store';
