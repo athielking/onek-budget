@@ -1,15 +1,15 @@
-import { Component, OnInit, ElementRef, Renderer2 } from '@angular/core';
+import { Component, OnInit, ElementRef, Renderer2, HostBinding } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Transaction } from '../models/transaction.model';
-import { ColSpanParams } from 'ag-grid-community';
-import { TransactionType, BACKSPACE, DELETE } from '../shared/constants';
+import { TransactionType } from '../shared/constants';
 import { CategoriesStore } from '../shared/categories.store';
 import { TransactionStore } from './transaction.store';
 import { AgGridHelper } from '../shared/ag-grid.helper';
 
 @Component({
   selector: 'okb-transaction-list',
-  templateUrl: './transaction-list.component.html'
+  templateUrl: './transaction-list.component.html',
+  styleUrls: ['./transaction-list.component.scss'],
 })
 export class TransactionListComponent implements OnInit {
 
@@ -22,6 +22,8 @@ export class TransactionListComponent implements OnInit {
 
   private gridApi;
   private columnApi;
+
+  @HostBinding('style.width') get width() { return '100%'; }
 
   constructor(private transactionStore: TransactionStore,
               private categoriesStore: CategoriesStore,

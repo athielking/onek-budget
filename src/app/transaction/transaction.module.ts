@@ -14,6 +14,7 @@ import { TransactionStore } from './transaction.store';
   declarations: [
     TransactionListComponent,
     TransactionHeaderComponent,
+
   ],
   imports: [
     CommonModule,

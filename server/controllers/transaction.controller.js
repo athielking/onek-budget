@@ -138,7 +138,7 @@ async function aggregateSubcategory(viewDate) {
 }
 
 async function aggregateCategoryByType(viewDate) {
-  var start = moment(viewDate, "YYYY-MM-DD").date(1);
+  var start = moment(viewDate, 'YYYY-MM-DD').date(1);
   var end = start.clone().add(1, 'month');
 
   const match = {
@@ -154,9 +154,9 @@ async function aggregateCategoryByType(viewDate) {
     }, 
     {
       '$group': {
-        '_id': { '$concat': [ '$type','$category']},
+        '_id': {'$concat': ['$type','.','$category']},
         'type': {'$first': '$type'},
-        'category': { '$first': '$category' },
+        'category': {'$first': '$category'},
         'total': { '$sum': '$amount'}
       }
     }];

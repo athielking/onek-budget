@@ -6,14 +6,14 @@
       <clr-alert *ngIf="gainLoss < 0" clrAlertType="danger" [clrAlertClosable]="false">
         <clr-alert-item>
           <span class="alert-text card-title">
-            {{ gainLoss | absolute | number:'1.2-2' | currency }} Overspending
+            {{ gainLoss | absolute | currency:'USD':'symbol':'1.2-2' }} Overspending
           </span>
         </clr-alert-item>
       </clr-alert>
       <clr-alert *ngIf="gainLoss > 0" clrAlertType="success"  [clrAlertClosable]="false">
         <clr-alert-item>
           <span class="alert-text card-title">
-            {{ gainLoss | absolute | number:'1.2-2' | currency }} Saved!
+            {{ gainLoss | absolute | currency:'USD':'symbol':'1.2-2' }} Saved!
           </span>
         </clr-alert-item>
       </clr-alert>
@@ -26,10 +26,10 @@
       </clr-alert>
       
       <div *ngIf="gainLoss > 0" class="card-text">
-          Congrats!  You've saved {{ gainLoss | absolute | number:'1.2-2' | currency }} this month. 
+          Congrats!  You've saved {{ gainLoss | absolute | currency:'USD':'symbol':'1.2-2' }} this month. 
       </div>
       <div *ngIf="gainLoss < 0" class="card-text">
-          Oops. We spent {{ gainLoss | absolute | number:'1.2-2' | currency }} more than we've earned.
+          Oops. We spent {{ gainLoss | absolute | currency:'USD':'symbol':'1.2-2' }} more than we've earned.
       </div>
       <div *ngIf="gainLoss === 0" class="card-text">
         You broke even. 

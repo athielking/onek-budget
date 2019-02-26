@@ -46,17 +46,17 @@ export class SummaryStore {
       const categories = result[1];
       const subCategories = result[2];
 
-      categories.forEach( c => {
-        const sub = subCategories.find( s => s.type === c.type && s.category === c.category);
-        if (sub) {
-          c.children.push(sub);
+      subCategories.forEach( s => {
+        const cat = categories.find( c => c.type === s.type && c.category === s.category);
+        if (cat) {
+          cat.children.push(s);
         }
       });
 
-      types.forEach( t => {
-        const cat = categories.find( c => c.type === t.type);
-        if ( cat ) {
-          t.children.push(cat);
+      categories.forEach( c => {
+        const type = types.find( t => t.type === c.type );
+        if (type) {
+          type.children.push(c);
         }
       });
 
