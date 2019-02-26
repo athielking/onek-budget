@@ -5,6 +5,7 @@ import { Transaction } from '../models/transaction.model';
 import { TransactionType } from '../shared/constants';
 import * as moment from 'moment';
 import { Moment } from 'moment';
+import { Summary } from '../models/summary.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,15 +13,23 @@ import { Moment } from 'moment';
 export class TransactionService {
 
   private serviceUri = 'http://localhost:4040/api/trans';
+  // private serviceUri = 'https://api.myjson.com/bins/za91w';
   constructor(private httpClient: HttpClient) { }
 
   public getTransactions( viewDate: Moment ) {
 
-    return this.httpClient.get(this.serviceUri + `?date=${viewDate.format('YYYY-MM-DD')}`).pipe(
-      map( (data: Object[]) => data.map( el => {
+    const endpoint = this.serviceUri + `?date=${viewDate.format('YYYY-MM-DD')}`;
+    return this.httpClient.get(endpoint).pipe(
+      map( (data: any[]) => data.map( el => {
         if (el['date']) {
           el['date'] = moment(el['date']);
         }
+
+        if (el.majorcategory) {
+          el.category = el.majorcategory;
+          delete el.majorcategory;
+        }
+
         return new Transaction(el);
       }).filter( trans => trans.date.month === viewDate.month))
     );

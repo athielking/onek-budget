@@ -1,0 +1,23 @@
+<div class="card">
+  <div class="card-header">
+      Transaction Type Summary
+  </div>
+  <clr-stack-view>
+    <clr-stack-block *ngFor="let summary of (summaryData$ | async)"
+      [clrSbExpandable]="true">
+      <clr-stack-label>{{ summary.type }}</clr-stack-label>
+      <clr-stack-content>{{ summary.total | absolute | number:'1.2-2' | currency }}</clr-stack-content>
+
+      <clr-stack-block *ngFor="let category of summary.children"
+        [clrSbExpandable]="true">
+        <clr-stack-label>{{ category.category }}</clr-stack-label>
+        <clr-stack-content>{{ category.total | absolute | number:'1.2-2' | currency }}</clr-stack-content>
+      
+        <clr-stack-block *ngFor="let sub of category.children">
+          <clr-stack-label>{{ sub.subcategory }}</clr-stack-label>
+          <clr-stack-content>{{ sub.total | absolute | number:'1.2-2' | currency }}</clr-stack-content>
+        </clr-stack-block>
+      </clr-stack-block>
+    </clr-stack-block>
+  </clr-stack-view>
+</div>

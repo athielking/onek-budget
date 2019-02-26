@@ -14,6 +14,8 @@ import { StatusRendererComponent } from './status-renderer.component';
 import { CategoriesStore } from './categories.store';
 import { CategoriesService } from './categories.service';
 import { AddTemplateRendererComponent } from './add-template-renderer.component';
+import { TotalSpendSaveComponent } from './total-spend-save.component';
+import { TypeSummaryComponent } from './type-summary.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { AddTemplateRendererComponent } from './add-template-renderer.component'
     SelectEditorComponent,
     AutocompleteEditorComponent,
     CurrencyRendererComponent,
-    StatusRendererComponent
+    StatusRendererComponent,
+    TotalSpendSaveComponent,
+    TypeSummaryComponent,
   ],
   imports: [
     CommonModule,
@@ -51,7 +55,9 @@ import { AddTemplateRendererComponent } from './add-template-renderer.component'
     SelectEditorComponent,
     AutocompleteEditorComponent,
     CurrencyRendererComponent,
-    StatusRendererComponent
+    StatusRendererComponent,
+    TotalSpendSaveComponent,
+    TypeSummaryComponent,
   ]
 })
 export class SharedModule { }

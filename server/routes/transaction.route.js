@@ -12,6 +12,9 @@ router.route('/')
   .post(asyncHandler(insert))
   .get(asyncHandler(getAll));
 
+router.route('/agg/:type')
+  .get(asyncHandler(getAggregate));
+
 router.route('/:id')
   .get(asyncHandler(get))
   .put(asyncHandler(put))
@@ -53,4 +56,21 @@ async function patch(req, res) {
 
 async function remove(req, res) {
   await tranCtrl.remove(req.params['id']);
+}
+
+async function getAggregate(req, res) {
+  let aggregate;
+  let aggType = req.params['type'];
+  console.log(req.params);
+
+  switch(aggType) {
+    case 'Type':
+      aggregate = await tranCtrl.getAggregateOfType(req.query.date)
+      break;
+    case 'Category':
+      aggregate = await tranCtrl.getAggregateOfCategory(req.query.date)
+      break;
+  }
+  
+  return res.json(aggregate);
 }

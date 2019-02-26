@@ -10,6 +10,7 @@ import { Template } from '../models/template.model';
 export class TemplateService {
 
   private serviceUri = 'http://localhost:4040/api/temp';
+
   constructor(private httpClient: HttpClient) { }
 
   public getTemplates() {

@@ -20,7 +20,12 @@ module.exports = {
   getByDate,
   put,
   patch,
-  remove
+  remove,
+  aggregateType,
+  aggregateCategory,
+  aggregateSubcategory,
+  aggregateCategoryByType,
+  aggregateSubcategoryByType
 }
 
 async function insert(transaction) {
@@ -38,9 +43,9 @@ async function get(id) {
 }
 
 async function getByDate(viewDate) {
-  var start = moment(viewDate).day(1);
+  var start = moment(viewDate, "YYYY-MM-DD").date(1);
   var end = start.clone().add(1, 'month');
-
+  
   return await Transaction.find({
     "date": {
       "$gte": start.toDate(),
@@ -59,4 +64,129 @@ async function patch(id, changes) {
 
 async function remove(id) {
   return await Transaction.deleteOne({_id: id});
+}
+
+async function aggregateType(viewDate) {
+  var start = moment(viewDate, "YYYY-MM-DD").date(1);
+  var end = start.clone().add(1, 'month');
+
+  const pipeline = [
+    {
+      '$match': {
+        'date' : {
+          '$gte': start.toDate(),
+          '$lt': end.toDate()
+        }
+      },
+    }, 
+    {
+      '$group': {
+        '_id': '$type',
+        'type': { '$first': '$type' },
+        'total': { '$sum': '$amount'}
+      }
+    }];
+  return await Transaction.aggregate(pipeline)
+}
+
+async function aggregateCategory(viewDate) {
+  var start = moment(viewDate, "YYYY-MM-DD").date(1);
+  var end = start.clone().add(1, 'month');
+
+  const pipeline = [
+    {
+      '$match': {
+        'date' : {
+          '$gte': start.toDate(),
+          '$lt': end.toDate()
+        }
+      }
+    }, 
+    {
+      '$group': {
+        '_id': '$category',
+        'category': { '$first': '$category' },
+        'total': { '$sum': '$amount'}
+      }
+    }];
+
+  return await Transaction.aggregate(pipeline)
+}
+
+async function aggregateSubcategory(viewDate) {
+  var start = moment(viewDate, "YYYY-MM-DD").date(1);
+  var end = start.clone().add(1, 'month');
+
+  const pipeline = [
+    {
+      '$match': {
+        'date' : {
+          '$gte': start.toDate(),
+          '$lt': end.toDate()
+        }
+      }
+    }, 
+    {
+      '$group': {
+        '_id': '$subcategory',
+        'subcategory': { '$first': '$subcategory' },
+        'total': { '$sum': '$amount'}
+      }
+    }];
+
+  return await Transaction.aggregate(pipeline)
+}
+
+async function aggregateCategoryByType(viewDate) {
+  var start = moment(viewDate, "YYYY-MM-DD").date(1);
+  var end = start.clone().add(1, 'month');
+
+  const match = {
+    'date' : {
+      '$gte': start.toDate(),
+      '$lt': end.toDate()
+    }
+  }; 
+
+  const pipeline = [
+    {
+      '$match': match
+    }, 
+    {
+      '$group': {
+        '_id': { '$concat': [ '$type','$category']},
+        'type': {'$first': '$type'},
+        'category': { '$first': '$category' },
+        'total': { '$sum': '$amount'}
+      }
+    }];
+
+  return await Transaction.aggregate(pipeline)
+}
+
+async function aggregateSubcategoryByType(viewDate) {
+  var start = moment(viewDate, "YYYY-MM-DD").date(1);
+  var end = start.clone().add(1, 'month');
+  const match = {
+    'date' : {
+      '$gte': start.toDate(),
+      '$lt': end.toDate()
+    }
+  }; 
+
+  const pipeline = [
+    {
+      '$match': match
+    }, 
+    {
+      '$group': {
+        '_id': { '$concat': [ '$type','$category', '$subcategory']},
+        'type': { '$first': '$type' },
+        'category': { '$first': '$category' },
+        'subcategory': { '$first': '$subcategory' },
+        'total': { '$sum': '$amount'}
+      }
+    }];
+
+  return await Transaction.aggregate(pipeline)
 }

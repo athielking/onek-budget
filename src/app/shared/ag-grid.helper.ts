@@ -30,7 +30,6 @@ export namespace AgGridHelper {
     export function getColSpan(params: any): number {
 
         if (params.node.rowPinned === 'top') {
-          console.log(params);
           return params.columnApi.columnController.columnDefs.length;
         }
 

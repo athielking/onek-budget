@@ -1,5 +1,11 @@
-<nav class="subnav">
-    <div class="flex-row flex" style="margin-top: 9px; margin-left: 8px;">
+<div style="height:662px" class="flex-row">
+
+  <div class="flex-column" style="padding: 8px;">
+    <okb-total-spend-save></okb-total-spend-save>
+    <okb-type-summary></okb-type-summary>
+  </div>
+  <div class="flex-column">
+    <div class="flex-row flex" style="padding-top: 9px; padding-left: 8px;">
       <button class="btn btn-sm" (click)="togglePinnedDiv(true)">Add Transaction</button>
       
       <div class="flex-row reverse flex">
@@ -15,17 +21,19 @@
       </div>
       <span class="flex"></span>
     </div>
-  </nav>
-<ag-grid-angular
-  #agGrid
-  style="height: 100%; width: 100%"
-  class="ag-theme-material"
-  [rowData]="rowData | async"
-  [columnDefs]="columnDefs"
-  [frameworkComponents]="frameworkComponents"
-  [pinnedTopRowData]="newTransactionData"
-  [context]="context"
-  [getRowHeight]="getRowHeight"
-  (gridReady)="onGridReady($event)"
-  (cellValueChanged)="onCellValueChanged($event)">
+
+    <ag-grid-angular
+      #agGrid
+      style="height:90%; width:100%"
+      class="ag-theme-material"
+      [rowData]="rowData | async"
+      [columnDefs]="columnDefs"
+      [frameworkComponents]="frameworkComponents"
+      [pinnedTopRowData]="newTransactionData"
+      [context]="context"
+      [getRowHeight]="getRowHeight"
+      (gridReady)="onGridReady($event)"
+      (cellValueChanged)="onCellValueChanged($event)">
 </ag-grid-angular>
+  </div>
+</div>
