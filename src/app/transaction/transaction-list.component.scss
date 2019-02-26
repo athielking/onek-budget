@@ -1,6 +1,7 @@
 .widget-container {
     width: 30%;
     max-width: 17rem;
+    overflow-y: scroll !important;
 }
 
 .widget {
@@ -8,6 +9,3 @@
     padding-right: .3rem;
 }
 
-.header.sub-header {
-    height: 2rem;
-}

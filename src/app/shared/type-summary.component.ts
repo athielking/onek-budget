@@ -5,7 +5,8 @@ import { SummaryStore } from './summary.store';
 
 @Component({
   selector: 'okb-type-summary',
-  templateUrl: './type-summary.component.html'
+  templateUrl: './type-summary.component.html',
+  styleUrls: ['./type-summary.component.scss']
 })
 export class TypeSummaryComponent implements OnInit {
 

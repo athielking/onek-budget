@@ -2,22 +2,25 @@
   <div class="card-header">
       Transaction Type Summary
   </div>
-  <clr-stack-view>
-    <clr-stack-block *ngFor="let summary of (summaryData$ | async)"
-      [clrSbExpandable]="true">
-      <clr-stack-label>{{ summary.type }}</clr-stack-label>
-      <clr-stack-content>{{ summary.total | absolute | currency:'USD':'symbol':'1.2-2' }}</clr-stack-content>
+  <clr-tree-node *ngFor="let type of (summaryData$ | async)">
+    <div class="tree-node">
+      <span class="flex">{{ type.type }}</span>
+      <span class="flex">{{ type.total | absolute | currency:'USD':'symbol':'1.2-2' }}</span>
+    </div>
+  
+      <clr-tree-node *ngFor="let category of type.children">
+        <div class="tree-node">
+            <span class="flex">{{ category.category }}</span>
+            <span class="flex">{{ category.total | absolute | currency:'USD':'symbol':'1.2-2' }}</span>
+        </div>
 
-      <clr-stack-block *ngFor="let category of summary.children"
-        [clrSbExpandable]="true">
-        <clr-stack-label>{{ category.category }}</clr-stack-label>
-        <clr-stack-content>{{ category.total | absolute | currency:'USD':'symbol':'1.2-2' }}</clr-stack-content>
-      
-        <clr-stack-block *ngFor="let sub of category.children">
-          <clr-stack-label>{{ sub.subcategory }}</clr-stack-label>
-          <clr-stack-content>{{ sub.total | absolute | currency:'USD':'symbol':'1.2-2' }}</clr-stack-content>
-        </clr-stack-block>
-      </clr-stack-block>
-    </clr-stack-block>
-  </clr-stack-view>
+        <clr-tree-node *ngFor="let sub of category.children">
+          <div class="tree-node">
+              <span class="flex">{{ sub.subcategory }}</span>
+              <span class="flex">{{ sub.total | absolute | currency:'USD':'symbol':'1.2-2' }}</span>
+          </div>
+        </clr-tree-node>
+      </clr-tree-node>
+  </clr-tree-node>
 </div>
+
