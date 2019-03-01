@@ -32,12 +32,13 @@ export class TransactionStore {
     this.storageService.itemChanged.pipe(
       filter(key => key === StorageKeys.viewDate),
       map(key => moment(storageService.getItem(key, true)))
-    ).subscribe( date => this.getTransactions(date));
+    ).subscribe( date => this.getTransactions());
   }
 
-  public getTransactions(viewDate?: Moment) {
-    if (!viewDate) {
-      viewDate = moment();
+  public getTransactions() {
+    let viewDate = moment();
+    if (this.storageService.getItem(StorageKeys.viewDate)) {
+      viewDate = moment(this.storageService.getItem(StorageKeys.viewDate, true));
     }
 
     this.transactionService.getTransactions(viewDate).subscribe( data => this._transactions.next(data) );

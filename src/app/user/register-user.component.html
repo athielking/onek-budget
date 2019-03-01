@@ -1,0 +1,66 @@
+
+<div class="card">
+  <div class="card-header">
+      Register New User
+  </div>
+  <div class="card-block">
+    <form clrForm [formGroup]="registerForm">
+      <clr-input-container>
+          <label>User Name</label>
+          <input clrInput type="text" formControlName="username" />
+          <clr-control-helper>Enter a unique username</clr-control-helper>
+          <clr-control-error *ngIf="f.username.errors && f.username.errors.required">
+            Username is required
+          </clr-control-error>
+      </clr-input-container>
+  
+      <clr-input-container>
+        <label>Full Name</label>
+        <input clrInput type="text" formControlName="fullname" />
+        <clr-control-helper>Enter your Full Name</clr-control-helper>
+        <clr-control-error *ngIf="f.fullname.errors && f.fullname.errors.required">
+          Full Name is required
+        </clr-control-error>
+      </clr-input-container>
+  
+      <clr-input-container>
+        <label>Email</label>
+        <input clrInput type="text" formControlName="email" />
+        <clr-control-helper>Enter your email address</clr-control-helper>
+        <clr-control-error *ngIf="f.email.errors && f.email.errors.required">
+          Email is required
+        </clr-control-error>
+        <clr-control-error *ngIf="f.email.errors && f.email.errors.email">
+          Not a valid email address
+        </clr-control-error>
+  
+      </clr-input-container>
+  
+      <clr-password-container>
+        <label>Password</label>
+        <input clrPassword  type="text" formControlName="password" />
+        <clr-control-helper>Enter a password of at least 8 characters</clr-control-helper>
+        <clr-control-error *ngIf="f.password.errors && f.password.errors.required">
+          Password is Required
+        </clr-control-error>
+        <clr-control-error *ngIf="f.password.errors && f.password.errors.minLength">
+          Password must be at least 8 characters
+        </clr-control-error>
+      </clr-password-container>
+  
+      <clr-password-container>
+        <label>Confirm Password</label>
+        <input clrPassword  type="text" formControlName="repeatPassword" />
+        <clr-control-error *ngIf="f.repeatPassword.errors && f.repeatPassword.errors.required">
+          Password is Required
+        </clr-control-error>
+        <clr-control-error *ngIf="f.repeatPassword.errors && f.repeatPassword.errors.mustMatch">
+          Passwords must match
+        </clr-control-error>
+      </clr-password-container>
+    </form>
+  </div>
+  <div class="card-footer">
+    <button class="btn btn-primary" type="submit" [disabled]="!registerForm.valid" (click)="onSubmit()">Register</button>
+  </div>
+</div>

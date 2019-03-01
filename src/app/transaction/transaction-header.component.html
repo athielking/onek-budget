@@ -1,18 +1,19 @@
-<nav class="subnav">
-    <div class="flex-row flex" style="margin-top: 9px; margin-left: 8px;">
-      <button class="btn btn-sm" (click)="togglePinnedDiv(true)">Add Transaction</button>
+<header class="header header-2 flex-row flex">
       
-      <div class="flex-row reverse flex">
-        <div class="flex-row">
-          <button class="btn btn-link btn-icon" (click)="decreaseViewDate()">
-            <mat-icon>chevron_left</mat-icon>
-          </button>
-          <button class="btn btn-link btn-sm">Feburary</button>
-          <button class="btn btn-link btn-icon"(click)="increaseViewDate()">
-            <mat-icon>chevron_right</mat-icon>
-          </button>
-        </div>
-      </div>
-      <span class="flex"></span>
-    </div>
-  </nav>
+  <div class="header-nav">
+    <a [routerLink]="" class="nav-link nav-icon" (click)="decreaseViewDate()">
+      <clr-icon shape="angle left"></clr-icon>
+    </a>
+    <a [routerLink]="" class="nav-link">
+      <span class="nav-text">{{ viewDate.format('MMMM YYYY') }}</span>
+    </a>
+    <a [routerLink]="" class="nav-link nav-icon" (click)="increaseViewDate()">
+      <clr-icon shape="angle right"></clr-icon>
+    </a>
+  </div>
+  <div class="header-actions">
+      <a [routerLink]="" class="nav-link" matToolTip="Add Transaction" (click)="togglePinnedDiv(true)">
+          <span class="nav-text">Add Transaction</span>
+      </a>
+  </div>
+</header>

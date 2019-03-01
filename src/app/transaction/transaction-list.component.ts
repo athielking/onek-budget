@@ -1,10 +1,13 @@
 import { Component, OnInit, ElementRef, Renderer2, HostBinding } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Transaction } from '../models/transaction.model';
-import { TransactionType } from '../shared/constants';
+import { TransactionType, StorageKeys } from '../shared/constants';
 import { CategoriesStore } from '../shared/categories.store';
 import { TransactionStore } from './transaction.store';
 import { AgGridHelper } from '../shared/ag-grid.helper';
+import { StorageService } from '../shared/storage.service';
+
+import * as moment from 'moment';
 
 @Component({
   selector: 'okb-transaction-list',
@@ -27,6 +30,7 @@ export class TransactionListComponent implements OnInit {
 
   constructor(private transactionStore: TransactionStore,
               private categoriesStore: CategoriesStore,
+              private storageService: StorageService,
               private domRef: ElementRef,
               private renderer: Renderer2) {}
 
@@ -47,6 +51,7 @@ export class TransactionListComponent implements OnInit {
     ];
 
     this.rowData = this.transactionStore.transactions$;
+
     this.transactionStore.getTransactions();
     this.categoriesStore.loadCategories();
   }

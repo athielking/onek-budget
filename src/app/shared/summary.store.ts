@@ -29,6 +29,7 @@ export class SummaryStore {
 
     this.storageService.itemChanged.pipe(filter( key => key === StorageKeys.viewDate )).subscribe(key => {
       this.loadSummaries();
+      this.loadSummaryTree();
     });
   }
 
@@ -81,7 +82,7 @@ export class SummaryStore {
     let viewDate = moment();
 
     if ( this.storageService.getItem(StorageKeys.viewDate) ) {
-      viewDate = moment(this.storageService.getItem(StorageKeys.viewDate));
+      viewDate = moment(this.storageService.getItem(StorageKeys.viewDate, true));
     }
 
     return viewDate;

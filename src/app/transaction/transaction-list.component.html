@@ -7,25 +7,7 @@
   </div>
 
   <div style="width: 100%">
-    <header class="header header-2 flex-row flex">
-      
-      <div class="header-nav">
-        <a [routerLink]="" class="nav-link nav-icon">
-          <clr-icon shape="angle left"></clr-icon>
-        </a>
-        <a [routerLink]="" class="nav-link">
-          <span class="nav-text">Feburary</span>
-        </a>
-        <a [routerLink]="" class="nav-link nav-icon">
-          <clr-icon shape="angle right"></clr-icon>
-        </a>
-      </div>
-      <div class="header-actions">
-          <a [routerLink]="" class="nav-link" matToolTip="Add Transaction" (click)="togglePinnedDiv(true)">
-              <span class="nav-text">Add Transaction</span>
-          </a>
-      </div>
-    </header>
+    <okb-transaction-header></okb-transaction-header>
 
     <ag-grid-angular
       #agGrid

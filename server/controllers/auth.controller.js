@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const config = require('../config/config');
-
+const bcrypt = require('bcrypt');
+const User = require('../models/user.model');
 
 module.exports = {
   generateToken

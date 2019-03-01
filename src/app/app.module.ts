@@ -8,7 +8,7 @@ import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { TransactionModule } from './transaction/transaction.module';
 import { TemplateModule } from './template/template.module';
-import { Template } from './models/template.model';
+import { UserModule } from './user/user.module';
 
 @NgModule({
   declarations: [
@@ -25,6 +25,7 @@ import { Template } from './models/template.model';
       { path: '', redirectTo: 'transaction', pathMatch: 'full' },
       { path: 'transaction', loadChildren: () => TransactionModule },
       { path: 'template', loadChildren: () => TemplateModule },
+      { path: 'user', loadChildren: () => UserModule },
     ])
   ],
   providers: [],
