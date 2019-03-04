@@ -20,9 +20,18 @@ const localLogin = new LocalStrategy({
 });
 
 const jwtLogin = new JwtStrategy({
-  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  jwtFromRequest: function(req) {
+    var token = null;
+    if(req && req.cookies)
+      token = req.cookies['jwt'];
+    return token;
+  },
   secretOrKey: config.jwtSecret
 }, async (payload, done) => {
+  
+  if(!payload)
+    return done(null, false);
+
   let user = await User.findById(payload._id);
   if (!user) {
     return done(null, false);

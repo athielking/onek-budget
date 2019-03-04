@@ -6,14 +6,11 @@ const tranCtrl = require('../controllers/transaction.controller');
 const router = express.Router();
 module.exports = router;
 
-//router.use(passport.authenticate('jwt', { session: false }))
+router.use(passport.authenticate('jwt', { session: false }))
 
 router.route('/')
   .post(asyncHandler(insert))
   .get(asyncHandler(getAll));
-
-router.route('/agg/:type')
-  .get(asyncHandler(getAggregate));
 
 router.route('/:id')
   .get(asyncHandler(get))
@@ -21,19 +18,17 @@ router.route('/:id')
   .patch(asyncHandler(patch))
   .delete(asyncHandler(remove));
   
-
-
 async function insert(req, res) {
-  let user = await tranCtrl.insert(req.body);
+  let user = await tranCtrl.insert(req.user._id, req.body);
   res.json(user);
 }
 
 async function getAll(req, res) {
   let users;
   if (req.query.date) {
-    users = await tranCtrl.getByDate(req.query.date);
+    users = await tranCtrl.getByDate(req.user._id, req.query.date);
   } else {
-    users = await tranCtrl.getAll();
+    users = await tranCtrl.getAll(req.user._id);
   }
 
   res.json(users);
@@ -56,21 +51,4 @@ async function patch(req, res) {
 
 async function remove(req, res) {
   await tranCtrl.remove(req.params['id']);
-}
-
-async function getAggregate(req, res) {
-  let aggregate;
-  let aggType = req.params['type'];
-  console.log(req.params);
-
-  switch(aggType) {
-    case 'Type':
-      aggregate = await tranCtrl.getAggregateOfType(req.query.date)
-      break;
-    case 'Category':
-      aggregate = await tranCtrl.getAggregateOfCategory(req.query.date)
-      break;
-  }
-  
-  return res.json(aggregate);
 }

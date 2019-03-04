@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Moment } from 'moment';
 import * as moment from 'moment';
 import { StorageService } from '../shared/storage.service';
 import { StorageKeys } from '../shared/constants';
+
 
 @Component({
   selector: 'okb-transaction-header',
@@ -12,6 +13,9 @@ import { StorageKeys } from '../shared/constants';
 export class TransactionHeaderComponent implements OnInit {
 
   public viewDate: Moment;
+  @Output()
+  public togglePinnedDiv: EventEmitter<boolean> = new EventEmitter();
+
   constructor(private storageService: StorageService) { }
 
   ngOnInit() {
@@ -30,5 +34,9 @@ export class TransactionHeaderComponent implements OnInit {
   public decreaseViewDate() {
     this.viewDate.subtract(1, 'month');
     this.storageService.setItem(StorageKeys.viewDate, this.viewDate);
+  }
+
+  public onAddClick() {
+    this.togglePinnedDiv.emit(true);
   }
 }

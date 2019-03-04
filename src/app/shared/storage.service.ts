@@ -19,7 +19,13 @@ export class StorageService {
   public setItem(key: string, value: any) {
 
     const itemExists = localStorage.getItem(key) != null;
-    localStorage.setItem(key, JSON.stringify(value));
+
+    if (typeof(value) !== 'string') {
+      localStorage.setItem(key, JSON.stringify(value));
+    } else {
+      localStorage.setItem(key, value);
+    }
+
     if (!itemExists) {
       this._itemAdded.next(key);
     }

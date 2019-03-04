@@ -2,6 +2,7 @@
 const Joi = require('joi');
 const Transaction = require('../models/transaction.model');
 const moment = require('moment');
+const mongoose = require('mongoose');
 
 const transactionSchema = Joi.object({
   date: Joi.date().required(Joi.ref('date')),
@@ -28,21 +29,24 @@ module.exports = {
   aggregateSubcategoryByType
 }
 
-async function insert(transaction) {
+async function insert(userId, transaction) {
   user = await Joi.validate(transaction, transactionSchema, { abortEarly: false });
   
+  transaction.userId = userId;
   return await new Transaction(transaction).save();
 }
 
-async function getAll() {
-  return await Transaction.find();
+async function getAll(userId) {
+  return await Transaction.find({
+    "userId": userId
+  });
 }
 
 async function get(id) {
   return await Transaction.findById(id);
 }
 
-async function getByDate(viewDate) {
+async function getByDate(userId, viewDate) {
   var start = moment(viewDate, "YYYY-MM-DD").date(1);
   var end = start.clone().add(1, 'month');
   
@@ -50,7 +54,8 @@ async function getByDate(viewDate) {
     "date": {
       "$gte": start.toDate(),
       "$lt": end.toDate()
-    }
+    },
+    "userId": userId
   });
 }
 
@@ -66,7 +71,7 @@ async function remove(id) {
   return await Transaction.deleteOne({_id: id});
 }
 
-async function aggregateType(viewDate) {
+async function aggregateType(userId, viewDate) {
   var start = moment(viewDate, "YYYY-MM-DD").date(1);
   var end = start.clone().add(1, 'month');
 
@@ -76,7 +81,8 @@ async function aggregateType(viewDate) {
         'date' : {
           '$gte': start.toDate(),
           '$lt': end.toDate()
-        }
+        },
+        'userId': userId
       },
     }, 
     {
@@ -89,7 +95,7 @@ async function aggregateType(viewDate) {
   return await Transaction.aggregate(pipeline)
 }
 
-async function aggregateCategory(viewDate) {
+async function aggregateCategory(userId, viewDate) {
   var start = moment(viewDate, "YYYY-MM-DD").date(1);
   var end = start.clone().add(1, 'month');
 
@@ -99,7 +105,8 @@ async function aggregateCategory(viewDate) {
         'date' : {
           '$gte': start.toDate(),
           '$lt': end.toDate()
-        }
+        },
+        'userId': userId
       }
     }, 
     {
@@ -113,7 +120,7 @@ async function aggregateCategory(viewDate) {
   return await Transaction.aggregate(pipeline)
 }
 
-async function aggregateSubcategory(viewDate) {
+async function aggregateSubcategory(userId, viewDate) {
   var start = moment(viewDate, "YYYY-MM-DD").date(1);
   var end = start.clone().add(1, 'month');
 
@@ -123,7 +130,8 @@ async function aggregateSubcategory(viewDate) {
         'date' : {
           '$gte': start.toDate(),
           '$lt': end.toDate()
-        }
+        },
+        'userId': userId
       }
     }, 
     {
@@ -137,7 +145,7 @@ async function aggregateSubcategory(viewDate) {
   return await Transaction.aggregate(pipeline)
 }
 
-async function aggregateCategoryByType(viewDate) {
+async function aggregateCategoryByType(userId, viewDate) {
   var start = moment(viewDate, 'YYYY-MM-DD').date(1);
   var end = start.clone().add(1, 'month');
 
@@ -145,7 +153,8 @@ async function aggregateCategoryByType(viewDate) {
     'date' : {
       '$gte': start.toDate(),
       '$lt': end.toDate()
-    }
+    },
+    'userId': userId
   }; 
 
   const pipeline = [
@@ -164,14 +173,15 @@ async function aggregateCategoryByType(viewDate) {
   return await Transaction.aggregate(pipeline)
 }
 
-async function aggregateSubcategoryByType(viewDate) {
+async function aggregateSubcategoryByType(userId, viewDate) {
   var start = moment(viewDate, "YYYY-MM-DD").date(1);
   var end = start.clone().add(1, 'month');
   const match = {
     'date' : {
       '$gte': start.toDate(),
       '$lt': end.toDate()
-    }
+    },
+    'userId': userId
   }; 
 
   const pipeline = [

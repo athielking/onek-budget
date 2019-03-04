@@ -30,4 +30,5 @@ export function isDigitKey(keyCode: number) {
 
 export namespace StorageKeys {
     export const viewDate = 'VIEW_DATE';
+    export const userObj = 'USER_OBJECT';
 }

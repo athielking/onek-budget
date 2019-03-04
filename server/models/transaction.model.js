@@ -24,6 +24,10 @@ const TransactionSchema = new mongoose.Schema({
   subcategory: {
     type: String,
   },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }
 }, {
   versionKey: false
 });

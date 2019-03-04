@@ -16,7 +16,7 @@
             <label>Remember me</label>
             <input type="checkbox" name="rememberMe" clrCheckbox />
         </clr-checkbox-wrapper>
-        <div class="error active">
+        <div *ngIf="hasError" class="error active">
             Invalid user name or password
         </div>
         <button type="submit" class="btn btn-primary" (click)="onLogin()">Login</button>

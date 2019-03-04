@@ -7,7 +7,7 @@
   </div>
 
   <div style="width: 100%">
-    <okb-transaction-header></okb-transaction-header>
+    <okb-transaction-header (togglePinnedDiv)="togglePinnedDiv($event)"></okb-transaction-header>
 
     <ag-grid-angular
       #agGrid

@@ -8,6 +8,7 @@ import { TransactionHeaderComponent } from './transaction-header.component';
 import { TransactionListComponent } from './transaction-list.component';
 import { TransactionService } from './transaction.service';
 import { TransactionStore } from './transaction.store';
+import { AuthGuard } from '../core/auth.guard';
 
 
 @NgModule({
@@ -20,7 +21,7 @@ import { TransactionStore } from './transaction.store';
     CommonModule,
     SharedModule,
     RouterModule.forChild([
-      { path: '', component: TransactionListComponent }
+      { path: '', component: TransactionListComponent, canActivate: [AuthGuard] }
     ])
   ],
   providers: [

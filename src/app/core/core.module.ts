@@ -7,6 +7,8 @@ import { MaterialModule } from '../material/material.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { AbsolutePipe } from './absolute.pipe';
+import { CredentialInterceptor } from './credential.interceptor';
+import { AuthGuard } from './auth.guard';
 
 
 @NgModule({
@@ -21,7 +23,7 @@ import { AbsolutePipe } from './absolute.pipe';
     ReactiveFormsModule,
     FormsModule,
   ],
-  providers: [],
+  providers: [CredentialInterceptor, AuthGuard],
   bootstrap: [],
   exports: [
     HttpClientModule,

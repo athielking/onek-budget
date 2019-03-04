@@ -5,10 +5,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
+import { CredentialInterceptor } from './core/credential.interceptor';
+
 import { SharedModule } from './shared/shared.module';
 import { TransactionModule } from './transaction/transaction.module';
 import { TemplateModule } from './template/template.module';
 import { UserModule } from './user/user.module';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -28,7 +32,11 @@ import { UserModule } from './user/user.module';
       { path: 'user', loadChildren: () => UserModule },
     ])
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: CredentialInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

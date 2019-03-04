@@ -1,6 +1,7 @@
 import { Moment } from 'moment';
 
 export class User {
+    public _id: string;
     public username: string;
     public fullname: string;
     public email: string;
