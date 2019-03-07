@@ -16,6 +16,8 @@ import { CategoriesService } from './categories.service';
 import { AddTemplateRendererComponent } from './add-template-renderer.component';
 import { TotalSpendSaveComponent } from './total-spend-save.component';
 import { TypeSummaryComponent } from './type-summary.component';
+import { TemplateTransactionComponent } from './template-transaction.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -29,10 +31,12 @@ import { TypeSummaryComponent } from './type-summary.component';
     StatusRendererComponent,
     TotalSpendSaveComponent,
     TypeSummaryComponent,
+    TemplateTransactionComponent
   ],
   imports: [
     CommonModule,
     CoreModule,
+    RouterModule,
     AgGridModule.withComponents([
       AddTransactionRendererComponent,
       AddTemplateRendererComponent,
@@ -58,6 +62,7 @@ import { TypeSummaryComponent } from './type-summary.component';
     StatusRendererComponent,
     TotalSpendSaveComponent,
     TypeSummaryComponent,
+    TemplateTransactionComponent
   ]
 })
 export class SharedModule { }

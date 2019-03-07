@@ -8,6 +8,7 @@ import { AgGridHelper } from '../shared/ag-grid.helper';
 import { StorageService } from '../shared/storage.service';
 
 import * as moment from 'moment';
+import { SummaryStore } from '../shared/summary.store';
 
 @Component({
   selector: 'okb-transaction-list',
@@ -31,6 +32,7 @@ export class TransactionListComponent implements OnInit {
   constructor(private transactionStore: TransactionStore,
               private categoriesStore: CategoriesStore,
               private storageService: StorageService,
+              private summaryStore: SummaryStore,
               private domRef: ElementRef,
               private renderer: Renderer2) {}
 

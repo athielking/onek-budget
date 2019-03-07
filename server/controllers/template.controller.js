@@ -10,6 +10,9 @@ const templateSchema = Joi.object({
   type: Joi.string().allow(''),
   category: Joi.string().allow(''),
   subcategory: Joi.string().allow(''),
+  recur: Joi.number().required(Joi.ref('recur')),
+  recurrencePeriod: Joi.string().required(Joi.ref('recurrencePeriod')),
+  recurrenceStart: Joi.date().required(Joi.ref('recurrenceStart'))
 })
 
 module.exports = {

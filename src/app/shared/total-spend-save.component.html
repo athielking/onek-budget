@@ -1,8 +1,9 @@
 <div class="card">
   <div class="card-header">
       Total Gain / Loss
+      
   </div>
-  <div class="card-block">
+  <div *ngIf="!(loading$ | async)"  class="card-block">
       <clr-alert *ngIf="gainLoss < 0" clrAlertType="danger" [clrAlertClosable]="false">
         <clr-alert-item>
           <span class="alert-text card-title">
@@ -34,5 +35,11 @@
       <div *ngIf="gainLoss === 0" class="card-text">
         You broke even. 
       </div>
+  </div>
+
+  <div *ngIf="(loading$ | async)" class="card-block">
+    <div class="flex-row flex-center">
+      <span class="spinner"></span>
+    </div>
   </div>
 </div>

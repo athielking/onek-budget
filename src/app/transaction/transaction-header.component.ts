@@ -19,7 +19,7 @@ export class TransactionHeaderComponent implements OnInit {
   constructor(private storageService: StorageService) { }
 
   ngOnInit() {
-    this.viewDate = moment(this.storageService.getItem(StorageKeys.viewDate));
+    this.viewDate = moment(this.storageService.getItem(StorageKeys.viewDate, true));
     if ( !this.viewDate.isValid() ) {
       this.viewDate = moment();
       this.storageService.setItem(StorageKeys.viewDate, this.viewDate);

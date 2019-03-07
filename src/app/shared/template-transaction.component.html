@@ -1,0 +1,34 @@
+<div class="card">
+  <div class="card-header">
+      Template Transactions
+  </div>
+  <div *ngIf="!(loading$ | async)"  class="card-block">
+    <div class="card-text flex-row" *ngFor="let temp of (unMatched$ | async)">
+      <div class="flex-row">
+        <strong>{{ temp.date | date:'MM/dd' }}: </strong> 
+        <clr-tooltip>
+          <span style="padding-left: 1rem" clrTooltipTrigger>{{temp.payee}} - {{temp.amount | absolute | currency:'USD':'symbol':'1.2-2'}}</span>
+          <clr-tooltip-content clrPosition="top-right" *clrIfOpen>
+            <div class="flex-column">
+              <span><b>{{temp.payee}}</b></span>
+              <span>{{temp.category}}</span>
+              <span>{{temp.subcategory}}</span>
+              <span>{{temp.amount | absolute | currency:'USD':'symbol':'1.2-2'}}</span>
+            </div>
+          </clr-tooltip-content>
+        </clr-tooltip>
+        
+      </div>
+      <div class="flex"></div>
+      <button class="btn btn-link btn-icon">
+        <clr-icon shape="plus-circle"></clr-icon>
+      </button>
+    </div> 
+  </div>
+
+  <div *ngIf="(loading$ | async)" class="card-block">
+    <div class="flex-row flex-center">
+      <span class="spinner"></span>
+    </div>
+  </div>
+</div>

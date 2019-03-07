@@ -7,6 +7,16 @@ const TemplateSchema = new mongoose.Schema({
     max: 31,
     min: 1,
   },
+  recur: {
+    type: Number
+  },
+  recurrencePeriod: {
+    type: String,
+  },
+  recurrenceStart: {
+    type: Date,
+    default: Date.now
+  },
   payee: {
     type: String,
     required: true

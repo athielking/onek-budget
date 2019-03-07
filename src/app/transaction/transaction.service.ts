@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, shareReplay, filter } from 'rxjs/operators';
+import { map, shareReplay } from 'rxjs/operators';
 import { Transaction } from '../models/transaction.model';
-import { TransactionType } from '../shared/constants';
 import * as moment from 'moment';
 import { Moment } from 'moment';
-import { Summary } from '../models/summary.model';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +29,7 @@ export class TransactionService {
         }
 
         return new Transaction(el);
-      }).filter( trans => trans.date.month === viewDate.month))
+      }))
     );
   }
 

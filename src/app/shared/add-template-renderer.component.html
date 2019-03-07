@@ -35,43 +35,65 @@
                 </mat-form-field>
 
                 <mat-form-field style="width: 100px;">
-                        <mat-select #transType placeholder="Type" formControlName="type" tabindex="4">
-                            <mat-option *ngFor="let item of transactionTypes" [value]="item">{{item}}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
+                    <mat-select #transType placeholder="Type" formControlName="type" tabindex="4">
+                        <mat-option *ngFor="let item of transactionTypes" [value]="item">{{item}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
     
-                    <mat-form-field style="width: 160px;">
-                        <input
-                            #major
-                            matInput
-                            formControlName="category"
-                            placeholder="Category"
-                            tabindex="5"
-                            [matAutocomplete]="majorAuto"/>
-                        <mat-autocomplete #majorAuto="matAutocomplete">
-                            <mat-option *ngFor="let item of (categoriesStore.majorCategories$ | async)" [value]="item">{{item}}</mat-option>
-                        </mat-autocomplete>
-                    </mat-form-field>
+                <mat-form-field style="width: 160px;">
+                    <input
+                        #major
+                        matInput
+                        formControlName="category"
+                        placeholder="Category"
+                        tabindex="5"
+                        [matAutocomplete]="majorAuto"/>
+                    <mat-autocomplete #majorAuto="matAutocomplete">
+                        <mat-option *ngFor="let item of (categoriesStore.majorCategories$ | async)" [value]="item">{{item}}</mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
                     
-    
-                    <mat-form-field style="width: 160px;">
-                        <input
-                            #minor               
-                            matInput
-                            placeholder="Sub-Category"
-                            formControlName="subcategory"
-                            tabindex="6"
-                            [matAutocomplete]="minorAuto"/>
-                        <mat-autocomplete #minorAuto="matAutocomplete">
-                            <mat-option *ngFor="let item of (categoriesStore.minorCategory$ | async)" [value]="item">{{item}}</mat-option>
-                        </mat-autocomplete>
-                    </mat-form-field>
+                <mat-form-field style="width: 160px;">
+                    <input
+                        #minor               
+                        matInput
+                        placeholder="Sub-Category"
+                        formControlName="subcategory"
+                        tabindex="6"
+                        [matAutocomplete]="minorAuto"/>
+                    <mat-autocomplete #minorAuto="matAutocomplete">
+                        <mat-option *ngFor="let item of (categoriesStore.minorCategory$ | async)" [value]="item">{{item}}</mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
             </div>
-            <div class="flex-row reverse">
-                <button type="submit" class="btn btn-primary" tabindex="7" [disabled]="!form.valid">
+            <div class="flex-row">
+                <mat-form-field style="width: 150px;">
+                    <input required matInput placeholder="Recurrence Start Date" formControlName="recurrenceStart" tabindex="1" [matDatepicker]="picker"/>
+                    <mat-datepicker-toggle tabindex="7" matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error *ngIf="form.controls.recurrenceStart.errors && form.controls.recurrenceStart.errors.required">Date is Required</mat-error>
+                </mat-form-field>
+
+                <mat-form-field style="width: 100px;">
+                    <input required matInput formControlName="recur" placeholder="Recurs every" tabindex="8" (keypress)="onKeyPress($event)"/>
+                    <mat-error *ngIf="form.controls.recur.errors && form.controls.recur.errors.required">Amount is Required</mat-error>
+                </mat-form-field>
+
+                <mat-form-field style="width: 100px;">
+                    <mat-select placeholder="Recurrence Period" formControlName="recurrencePeriod" tabindex="9">
+                        <mat-option value="months">Months</mat-option>
+                        <mat-option value="weeks">Weeks</mat-option>
+                        <mat-option value="days">Days</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <div class="flex"></div>
+
+                <button type="submit" class="btn btn-primary" tabindex="10" [disabled]="!form.valid">
                     <clr-icon shape="plus"></clr-icon> Add
                 </button>
             </div>
+            
         </form>
     </div>
 </ng-container>

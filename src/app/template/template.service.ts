@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, shareReplay } from 'rxjs/operators';
 import { Template } from '../models/template.model';
-
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +17,10 @@ export class TemplateService {
 
     return this.httpClient.get(this.serviceUri).pipe(
       map( (data: Object[]) => data.map( el => {
+        if (el['recurrenceStart']) {
+          el['recurrenceStart'] = moment(el['recurrenceStart']);
+        }
+
         return new Template(el);
       })
     ));

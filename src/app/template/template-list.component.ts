@@ -60,6 +60,24 @@ export class TemplateListComponent implements OnInit {
           suppressKeyboardEvent: AgGridHelper.suppressKeyboardEvent
         },
         {
+          headerName: 'Recurs Every',
+          field: 'recur',
+          editable: true,
+          width: 150,
+          suppressKeyboardEvent: AgGridHelper.suppressKeyboardEvent
+        },
+        {
+          headerName: 'Recurrence Period',
+          field: 'recurrencePeriod',
+          editable: true,
+          width: 175,
+          cellEditor: 'selectEditor',
+          cellEditorParams: {
+            valuesFn: (rowData) => of(['months', 'weeks', 'days'])
+          },
+          suppressKeyboardEvent: AgGridHelper.suppressKeyboardEvent
+        },
+        {
           headerName: 'Paid To',
           field: 'payee',
           editable: true,

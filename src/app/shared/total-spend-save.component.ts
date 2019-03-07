@@ -11,12 +11,15 @@ export class TotalSpendSaveComponent implements OnInit {
 
   @Input() summaryType: String;
   public summaryData$: Observable<Summary[]>;
+  public loading$: Observable<boolean>;
 
   public gainLoss = 0;
 
   constructor(private summaryStore: SummaryStore) {
     this.summaryData$ = this.summaryStore.typeSummary$;
     this.summaryData$.subscribe( summaries => this.gainLoss = summaries.map( s => s.total).reduce( (total, num) => total + num, 0));
+
+    this.loading$ = this.summaryStore.typeLoading$;
   }
 
   ngOnInit() {

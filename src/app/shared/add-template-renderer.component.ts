@@ -40,7 +40,7 @@ export class AddTemplateRendererComponent extends AddRecordRendererComponent imp
 
   initFormGroup() {
     return new FormGroup({
-      day: new FormControl(null, [Validators.max(31), Validators.min(1), Validators.required, Validators.pattern('\d+')]),
+      day: new FormControl(null, [Validators.max(31), Validators.min(1), Validators.required, Validators.pattern(/\d+/)]),
       payee: new FormControl(''),
       amount: new FormControl(null,
       {
@@ -49,7 +49,10 @@ export class AddTemplateRendererComponent extends AddRecordRendererComponent imp
       }),
       type: new FormControl(TransactionType.Optional),
       category: new FormControl(''),
-      subcategory: new FormControl('')
+      subcategory: new FormControl(''),
+      recur: new FormControl(1),
+      recurrencePeriod: new FormControl('months'),
+      recurrenceStart: new FormControl(moment().date(1).month(1))
     });
   }
 }

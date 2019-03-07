@@ -1,26 +1,32 @@
 <div class="card">
   <div class="card-header">
-      Transaction Type Summary
-  </div>
-  <clr-tree-node *ngFor="let type of (summaryData$ | async)">
-    <div class="tree-node">
-      <span class="flex">{{ type.type }}</span>
-      <span class="flex">{{ type.total | absolute | currency:'USD':'symbol':'1.2-2' }}</span>
+    <div class="flex-row">
+      <span>Transaction Type Summary</span>
+      <span class="flex"></span>
+      <span *ngIf="(loading$ | async)" class="spinner spinner-inline"></span>
     </div>
-  
-      <clr-tree-node *ngFor="let category of type.children">
-        <div class="tree-node">
-            <span class="flex">{{ category.category }}</span>
-            <span class="flex">{{ category.total | absolute | currency:'USD':'symbol':'1.2-2' }}</span>
-        </div>
-
-        <clr-tree-node *ngFor="let sub of category.children">
+  </div>
+  <ng-container *ngIf="!(loading$ | async)">
+    <clr-tree-node *ngFor="let type of (summaryData$ | async)">
+      <div class="tree-node">
+        <span class="flex">{{ type.type }}</span>
+        <span class="flex">{{ type.total | absolute | currency:'USD':'symbol':'1.2-2' }}</span>
+      </div>
+    
+        <clr-tree-node *ngFor="let category of type.children">
           <div class="tree-node">
-              <span class="flex">{{ sub.subcategory }}</span>
-              <span class="flex">{{ sub.total | absolute | currency:'USD':'symbol':'1.2-2' }}</span>
+              <span class="flex">{{ category.category }}</span>
+              <span class="flex">{{ category.total | absolute | currency:'USD':'symbol':'1.2-2' }}</span>
           </div>
+
+          <clr-tree-node *ngFor="let sub of category.children">
+            <div class="tree-node">
+                <span class="flex">{{ sub.subcategory }}</span>
+                <span class="flex">{{ sub.total | absolute | currency:'USD':'symbol':'1.2-2' }}</span>
+            </div>
+          </clr-tree-node>
         </clr-tree-node>
-      </clr-tree-node>
-  </clr-tree-node>
+    </clr-tree-node>
+  </ng-container>
 </div>
 

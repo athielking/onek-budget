@@ -12,6 +12,8 @@ export class Transaction {
     public account: string;
     public category: string;
     public subcategory: string;
+    public userId: string;
+    public templateId: string;
 
     public _status: string = TransactionStatus.Pending;
     get status() {

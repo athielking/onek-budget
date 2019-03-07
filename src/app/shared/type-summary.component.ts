@@ -12,9 +12,11 @@ export class TypeSummaryComponent implements OnInit {
 
   @Input() summaryType: String;
   public summaryData$: Observable<Summary[]>;
+  public loading$: Observable<boolean>;
 
   constructor(private summaryStore: SummaryStore) {
     this.summaryData$ = this.summaryStore.summaryTree$;
+    this.loading$ = this.summaryStore.treeLoading$;
   }
 
   ngOnInit() {
