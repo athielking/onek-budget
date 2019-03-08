@@ -3,13 +3,13 @@ import { Transaction } from '../models/transaction.model';
 import { BehaviorSubject, Observable, forkJoin } from 'rxjs';
 
 import { map, filter, finalize } from 'rxjs/operators';
-import { StorageService } from '../shared/storage.service';
+import { StorageService } from './storage.service';
 
 import { Template } from '../models/template.model';
 import { TemplateService } from './template.service';
 import { Moment } from 'moment';
 import * as moment from 'moment';
-import { StorageKeys } from '../shared/constants';
+import { StorageKeys } from './constants';
 
 @Injectable({
   providedIn: 'root'
@@ -40,9 +40,9 @@ export class TemplateStore {
     this.templates$ = this._templates.asObservable().pipe(
       map(values => values.sort((a: Template, b: Template) => a.day > b.day ? 1 : a.day < b.day ? -1 : 0 )));
 
-    this.storageService.itemChanged.pipe(
-      filter( key => key === StorageKeys.viewDate )
-    ).subscribe(() => this.getTemplateTransactions());
+    this.storageService.itemChanged
+      .pipe(filter( key => key === StorageKeys.viewDate ))
+      .subscribe(() => this.getTemplateTransactions());
   }
 
   public getTemplates() {

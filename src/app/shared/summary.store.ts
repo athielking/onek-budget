@@ -35,7 +35,9 @@ export class SummaryStore {
   constructor(private summaryService: SummaryService,
               private storageService: StorageService) {
 
-    this.storageService.itemChanged.pipe(filter( key => key === StorageKeys.viewDate )).subscribe(key => {
+    this.storageService.itemChanged
+    .pipe(filter( key => key === StorageKeys.viewDate ))
+    .subscribe(() => {
       this.loadSummaries();
       this.loadSummaryTree();
     });

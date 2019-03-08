@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 
 import { SharedModule } from '../shared/shared.module';
 import { TemplateListComponent } from './template-list.component';
-import { TemplateService } from './template.service';
-import { TemplateStore } from './template.store';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
@@ -19,8 +17,6 @@ import { RouterModule } from '@angular/router';
     ])
   ],
   providers: [
-    TemplateService,
-    TemplateStore
   ],
   bootstrap: [],
   exports: [

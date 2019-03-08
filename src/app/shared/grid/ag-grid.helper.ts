@@ -5,7 +5,7 @@ import { SelectEditorComponent } from './select-editor.component';
 import { AutocompleteEditorComponent } from './autocomplete-editor.component';
 import { StatusRendererComponent } from './status-renderer.component';
 import { CurrencyRendererComponent } from './currency-renderer.component';
-import { DELETE, BACKSPACE } from './constants';
+import { DELETE, BACKSPACE } from '../constants';
 import { AddTemplateRendererComponent } from './add-template-renderer.component';
 
 export namespace AgGridHelper {

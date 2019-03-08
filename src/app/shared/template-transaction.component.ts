@@ -2,8 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Observable, combineLatest } from 'rxjs';
 import { Transaction } from '../models/transaction.model';
 import { TransactionStore } from '../transaction/transaction.store';
-import { TemplateStore } from '../template/template.store';
+import { TemplateStore } from './template.store';
 import { map } from 'rxjs/operators';
+import { StorageService } from './storage.service';
 
 @Component({
   selector: 'okb-template-transaction',
@@ -18,7 +19,7 @@ export class TemplateTransactionComponent implements OnInit {
   public gainLoss = 0;
 
   constructor(private templateStore: TemplateStore,
-              private transactionStore: TransactionStore) {
+              private transactionStore: TransactionStore ) {
 
     this.loading$ = templateStore.templateTransactionsLoading$;
     this.unMatched$ = combineLatest(this.templateStore.templateTransactions$, this.transactionStore.transactions$)
@@ -40,6 +41,20 @@ export class TemplateTransactionComponent implements OnInit {
   ngOnInit() {
     this.templateStore.getTemplates();
     this.transactionStore.getTransactions();
+  }
+
+  addTransactionFromTemplate(temp: Transaction) {
+    const newTran = new Transaction({
+      templateId: temp._id,
+      amount: temp.amount,
+      category: temp.category,
+      date: temp.date,
+      payee: temp.payee,
+      subcategory: temp.subcategory,
+      type: temp.type
+    });
+
+    this.transactionStore.addTransaction(newTran);
   }
 
 }

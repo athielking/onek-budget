@@ -12,6 +12,7 @@ const transactionSchema = Joi.object({
   type: Joi.string().allow(''),
   category: Joi.string().allow(''),
   subcategory: Joi.string().allow(''),
+  templateId: Joi.string().allow('')
 })
 
 module.exports = {

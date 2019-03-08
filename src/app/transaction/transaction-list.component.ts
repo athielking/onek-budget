@@ -4,7 +4,7 @@ import { Transaction } from '../models/transaction.model';
 import { TransactionType, StorageKeys } from '../shared/constants';
 import { CategoriesStore } from '../shared/categories.store';
 import { TransactionStore } from './transaction.store';
-import { AgGridHelper } from '../shared/ag-grid.helper';
+import { AgGridHelper } from '../shared/grid/ag-grid.helper';
 import { StorageService } from '../shared/storage.service';
 
 import * as moment from 'moment';
@@ -31,8 +31,6 @@ export class TransactionListComponent implements OnInit {
 
   constructor(private transactionStore: TransactionStore,
               private categoriesStore: CategoriesStore,
-              private storageService: StorageService,
-              private summaryStore: SummaryStore,
               private domRef: ElementRef,
               private renderer: Renderer2) {}
 
@@ -119,7 +117,7 @@ export class TransactionListComponent implements OnInit {
           suppressKeyboardEvent: AgGridHelper.suppressKeyboardEvent
         },
         {
-          field: 'status',
+          field: 'templateId',
           editable: false,
           width: 60,
           cellRenderer: 'statusRenderer',

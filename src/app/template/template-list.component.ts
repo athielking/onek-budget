@@ -3,8 +3,8 @@ import { Observable, of } from 'rxjs';
 import { Template } from '../models/template.model';
 import { TransactionType } from '../shared/constants';
 import { CategoriesStore } from '../shared/categories.store';
-import { TemplateStore } from './template.store';
-import { AgGridHelper } from '../shared/ag-grid.helper';
+import { TemplateStore } from '../shared/template.store';
+import { AgGridHelper } from '../shared/grid/ag-grid.helper';
 
 @Component({
   selector: 'okb-template-list',

@@ -7,7 +7,8 @@ import {
     MatSelectModule,
     MatAutocompleteModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatMenuModule
 } from '@angular/material';
 
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
@@ -18,14 +19,14 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
   imports: [
     CommonModule,
     MatDatepickerModule, MatInputModule, MatMomentDateModule, MatFormFieldModule, MatSelectModule, MatAutocompleteModule, MatButtonModule,
-    MatIconModule,
+    MatIconModule, MatMenuModule
   ],
   providers: [
   ],
   bootstrap: [],
   exports: [
     MatDatepickerModule, MatInputModule, MatMomentDateModule, MatFormFieldModule, MatSelectModule, MatAutocompleteModule, MatButtonModule,
-    MatIconModule,
+    MatIconModule, MatMenuModule
   ]
 })
 export class MaterialModule { }

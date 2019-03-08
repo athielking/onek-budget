@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-header">
-      Template Transactions
+      Recurring Transactions
   </div>
   <div *ngIf="!(loading$ | async)"  class="card-block">
     <div class="card-text flex-row" *ngFor="let temp of (unMatched$ | async)">
@@ -20,9 +20,14 @@
         
       </div>
       <div class="flex"></div>
-      <button class="btn btn-link btn-icon">
-        <clr-icon shape="plus-circle"></clr-icon>
-      </button>
+      <clr-tooltip>
+        <button clrTooltipTrigger class="btn btn-link btn-icon" (click)="addTransactionFromTemplate(temp)">
+            <clr-icon shape="plus-circle" ></clr-icon>
+        </button>
+        <clr-tooltip-content clrSize="sm" clrPosition="left" *clrIfOpen>
+            <span>Add Transaction</span>
+        </clr-tooltip-content>
+      </clr-tooltip>  
     </div> 
   </div>
 

@@ -2,7 +2,7 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { ICellRendererAngularComp } from 'ag-grid-angular';
 import { FormGroup, FormControl } from '@angular/forms';
 import { TransactionType, isDigitKey, SPACE } from 'src/app/shared/constants';
-import { CategoriesStore } from './categories.store';
+import { CategoriesStore } from '../categories.store';
 
 @Component({
   styleUrls: ['./add-record-renderer.component.scss']
