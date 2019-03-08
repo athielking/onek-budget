@@ -38,9 +38,13 @@ export class SummaryStore {
     this.storageService.itemChanged
     .pipe(filter( key => key === StorageKeys.viewDate ))
     .subscribe(() => {
-      this.loadSummaries();
-      this.loadSummaryTree();
+      this.loadAll();
     });
+  }
+
+  public loadAll() {
+    this.loadSummaries();
+    this.loadSummaryTree();
   }
 
   public loadSummaryTree() {

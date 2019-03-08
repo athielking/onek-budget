@@ -8,6 +8,7 @@ import { StorageKeys, TransactionStatus } from '../shared/constants';
 import * as moment from 'moment';
 import { Moment } from 'moment';
 import { strict } from 'assert';
+import { SummaryStore } from '../shared/summary.store';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,8 @@ export class TransactionStore {
   private _changeTimer;
 
   constructor(private transactionService: TransactionService,
-              private storageService: StorageService) {
+              private storageService: StorageService,
+              private summaryStore: SummaryStore) {
 
     this._changes = new Map<string, any>();
 
@@ -52,6 +54,7 @@ export class TransactionStore {
     this.transactionService.addTransaction(transaction).subscribe( (result: any) => {
       transaction._id = result['_id'];
       this._transactions.next([...values, transaction]);
+      this.summaryStore.loadAll();
     });
   }
 
@@ -76,6 +79,7 @@ export class TransactionStore {
         clearTimeout(this._changeTimer);
 
         result.forEach( tran => this.setStatus(tran._id, TransactionStatus.Success ));
+        this.summaryStore.loadAll();
       });
     }, this._changeDebounce);
   }
