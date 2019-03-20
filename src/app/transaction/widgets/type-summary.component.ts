@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Summary } from '../models/summary.model';
-import { SummaryStore } from './summary.store';
+import { Summary } from '../../models/summary.model';
+import { TransactionSummaryStore } from '../transaction-summary.store';
 
 @Component({
   selector: 'okb-type-summary',
@@ -14,7 +14,7 @@ export class TypeSummaryComponent implements OnInit {
   public summaryData$: Observable<Summary[]>;
   public loading$: Observable<boolean>;
 
-  constructor(private summaryStore: SummaryStore) {
+  constructor(private summaryStore: TransactionSummaryStore) {
     this.summaryData$ = this.summaryStore.summaryTree$;
     this.loading$ = this.summaryStore.treeLoading$;
   }

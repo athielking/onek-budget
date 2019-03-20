@@ -21,7 +21,12 @@ module.exports = {
   get,
   put,
   patch,
-  remove
+  remove,
+  aggregateType,
+  aggregateCategory,
+  aggregateSubcategory,
+  aggregateCategoryByType,
+  aggregateSubcategoryByType
 }
 
 async function insert(template) {
@@ -48,4 +53,103 @@ async function patch(id, changes) {
 
 async function remove(id) {
   return await Template.deleteOne({_id: id});
+}
+
+async function aggregateType(userId) {
+  const pipeline = [
+    {
+      '$match': {
+        'userId': userId
+      },
+    }, 
+    {
+      '$group': {
+        '_id': '$type',
+        'type': { '$first': '$type' },
+        'total': { '$sum': '$amount'}
+      }
+    }];
+  return await Template.aggregate(pipeline)
+}
+
+async function aggregateCategory(userId) {
+  const pipeline = [
+    {
+      '$match': {
+        'userId': userId
+      }
+    }, 
+    {
+      '$group': {
+        '_id': '$category',
+        'category': { '$first': '$category' },
+        'total': { '$sum': '$amount'}
+      }
+    }];
+
+  return await Template.aggregate(pipeline)
+}
+
+async function aggregateSubcategory(userId) {
+ 
+  const pipeline = [
+    {
+      '$match': {
+        'userId': userId
+      }
+    }, 
+    {
+      '$group': {
+        '_id': '$subcategory',
+        'subcategory': { '$first': '$subcategory' },
+        'total': { '$sum': '$amount'}
+      }
+    }];
+
+  return await Template.aggregate(pipeline)
+}
+
+async function aggregateCategoryByType(userId) {
+  
+  const match = {
+    'userId': userId
+  }; 
+
+  const pipeline = [
+    {
+      '$match': match
+    }, 
+    {
+      '$group': {
+        '_id': {'$concat': ['$type','.','$category']},
+        'type': {'$first': '$type'},
+        'category': {'$first': '$category'},
+        'total': { '$sum': '$amount'}
+      }
+    }];
+
+  return await Template.aggregate(pipeline)
+}
+
+async function aggregateSubcategoryByType(userId) {
+ 
+  const match = {
+    'userId': userId
+  }; 
+
+  const pipeline = [
+    {
+      '$match': match
+    }, 
+    {
+      '$group': {
+        '_id': { '$concat': [ '$type','$category', '$subcategory']},
+        'type': { '$first': '$type' },
+        'category': { '$first': '$category' },
+        'subcategory': { '$first': '$subcategory' },
+        'total': { '$sum': '$amount'}
+      }
+    }];
+
+  return await Template.aggregate(pipeline)
 }

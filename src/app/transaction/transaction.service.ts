@@ -39,6 +39,10 @@ export class TransactionService {
     return this.httpClient.post(this.serviceUri, transaction).pipe(shareReplay());
   }
 
+  public deleteTransaction(id: string) {
+    return this.httpClient.delete(this.serviceUri + `/${id}`).pipe(shareReplay());
+  }
+
   public patchTransaction(id: string, changes: any) {
     return this.httpClient.patch(this.serviceUri + `/${id}`, changes)
       .pipe(shareReplay(),

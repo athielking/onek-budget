@@ -25,6 +25,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     SharedModule,
     TransactionModule,
     TemplateModule,
+    UserModule,
     RouterModule.forRoot([
       { path: '', redirectTo: 'transaction', pathMatch: 'full' },
       { path: 'transaction', loadChildren: () => TransactionModule },

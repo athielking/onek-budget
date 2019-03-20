@@ -23,6 +23,10 @@ export class UserService {
     return this.httpClient.post(this.serviceUri + '/login', formValue).pipe(shareReplay());
   }
 
+  public logout() {
+    return this.httpClient.post(this.serviceUri + '/logout', {}).pipe(shareReplay());
+  }
+
   public isLoggedIn() {
     return this.httpClient.get(this.serviceUri + '/me');
   }

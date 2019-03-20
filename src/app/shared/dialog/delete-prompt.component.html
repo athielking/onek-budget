@@ -1,0 +1,9 @@
+
+<h3 mat-dialog-title class="modal-title">Delete {{ recordType }}?</h3>
+<mat-dialog-content class="modal-body">
+    <p>Are you sure you wish to delete this {{ recordType }}</p>
+</mat-dialog-content>
+<mat-dialog-actions class="modal-footer">
+    <button type="button" class="btn btn-outline" [mat-dialog-close]="false">Cancel</button>
+    <button type="button" class="btn btn-primary" [mat-dialog-close]="true">Ok</button>
+</mat-dialog-actions>

@@ -1,0 +1,33 @@
+<div class="card">
+  <div class="card-header">
+      Template Expense Summary
+  </div>
+  <div *ngIf="!(loading$ | async)"  class="card-block">
+      <clr-alert clrAlertType="info" [clrAlertClosable]="false">
+        <clr-alert-item>
+          <span class="alert-text card-title">
+            {{ totalExpenses | absolute | currency:'USD':'symbol':'1.2-2' }} Expenses
+          </span>
+        </clr-alert-item>
+        <clr-alert-item>
+          <span class="alert-text card-title">
+            {{ totalIncome | absolute | currency:'USD':'symbol':'1.2-2' }} Income
+          </span>
+        </clr-alert-item>
+      </clr-alert>
+      <clr-alert [clrAlertType]="netGainLoss > 0 ? 'success' : 'danger'"  [clrAlertClosable]="false">
+        <clr-alert-item>
+          <span class="alert-text card-title">
+            {{ netGainLoss | currency:'USD':'symbol':'1.2-2' }} {{ netGainLoss >= 0 ? 'Saved' : 'Overspending' }}
+          </span>
+        </clr-alert-item>
+      </clr-alert>
+  </div>
+
+  <div *ngIf="(loading$ | async)" class="card-block">
+    <div class="flex-row flex-center">
+      <span class="spinner"></span>
+    </div>
+  </div>
+</div>
+

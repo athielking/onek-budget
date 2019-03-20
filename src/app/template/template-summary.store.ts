@@ -1,18 +1,16 @@
 import { Injectable } from '@angular/core';
 import { filter, finalize } from 'rxjs/operators';
-import { Observable, BehaviorSubject, combineLatest, Subject, forkJoin } from 'rxjs';
-import { CategoriesService } from './categories.service';
+import { Observable, BehaviorSubject, forkJoin } from 'rxjs';
 import { Summary } from '../models/summary.model';
-import { SummaryService } from './summary.service';
-import { Moment } from 'moment';
-import { StorageService } from './storage.service';
-import { StorageKeys } from './constants';
+import { TemplateSummaryService } from './template-summary.service';
+import { StorageService } from '../shared/storage.service';
+import { StorageKeys } from '../shared/constants';
 import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SummaryStore {
+export class TemplateSummaryStore {
 
   private _typeSummary: BehaviorSubject<Summary[]> = new BehaviorSubject([]);
   private _typeLoading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
@@ -32,14 +30,7 @@ export class SummaryStore {
   public summaryTree$: Observable<Summary[]> = this._summaryTree.asObservable();
   public treeLoading$: Observable<boolean> = this._treeLoading.asObservable();
 
-  constructor(private summaryService: SummaryService,
-              private storageService: StorageService) {
-
-    this.storageService.itemChanged
-    .pipe(filter( key => key === StorageKeys.viewDate ))
-    .subscribe(() => {
-      this.loadAll();
-    });
+  constructor(private summaryService: TemplateSummaryService) {
   }
 
   public loadAll() {
@@ -48,13 +39,12 @@ export class SummaryStore {
   }
 
   public loadSummaryTree() {
-    const viewDate = this.getViewDate();
     this._treeLoading.next(true);
 
     const all = forkJoin(
-      this.summaryService.getTypeAggregations(viewDate),
-      this.summaryService.getCategoryByTypeAggregations(viewDate),
-      this.summaryService.getSubcategoryByTypeAggregations(viewDate)
+      this.summaryService.getTypeAggregations(),
+      this.summaryService.getCategoryByTypeAggregations(),
+      this.summaryService.getSubcategoryByTypeAggregations()
     );
 
     all.pipe( finalize( () => this._treeLoading.next(false) ) )
@@ -89,7 +79,7 @@ export class SummaryStore {
   public getSummariesByType() {
     this._typeLoading.next(true);
 
-    this.summaryService.getTypeAggregations(this.getViewDate())
+    this.summaryService.getTypeAggregations()
       .pipe(finalize(() => this._typeLoading.next(false)))
       .subscribe( (values: Summary[]) => this._typeSummary.next(values));
   }
@@ -97,18 +87,8 @@ export class SummaryStore {
   public getSummariesByCategory() {
     this._categoriesLoading.next(true);
 
-    this.summaryService.getCategoryAggregations(this.getViewDate())
+    this.summaryService.getCategoryAggregations()
       .pipe(finalize(() => this._categoriesLoading.next(false)))
       .subscribe( (values: Summary[]) => this._categorySummary.next(values));
-  }
-
-  private getViewDate() {
-    let viewDate = moment();
-
-    if ( this.storageService.getItem(StorageKeys.viewDate) ) {
-      viewDate = moment(this.storageService.getItem(StorageKeys.viewDate, true));
-    }
-
-    return viewDate;
   }
 }

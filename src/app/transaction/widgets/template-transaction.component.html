@@ -2,7 +2,7 @@
   <div class="card-header">
       Recurring Transactions
   </div>
-  <div *ngIf="!(loading$ | async)"  class="card-block">
+  <div *ngIf="!(loading$ | async) && (unMatched$ | async).length > 0"  class="card-block">
     <div class="card-text flex-row" *ngFor="let temp of (unMatched$ | async)">
       <div class="flex-row">
         <strong>{{ temp.date | date:'MM/dd' }}: </strong> 
@@ -29,6 +29,20 @@
         </clr-tooltip-content>
       </clr-tooltip>  
     </div> 
+  </div>
+
+  <div *ngIf="!(loading$ | async) && (unMatched$ | async).length === 0" class="card-block">
+    <clr-alert clrAlertType="info"  [clrAlertClosable]="false">
+      <clr-alert-item>
+        <span class="alert-text card-title">
+          No Unmatched Template Transactions
+        </span>
+      </clr-alert-item>
+    </clr-alert>
+      
+    <div class="card-text">
+      All Template transaction have been matched to transactions in the transaction list
+    </div>
   </div>
 
   <div *ngIf="(loading$ | async)" class="card-block">

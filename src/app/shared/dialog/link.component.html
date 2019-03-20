@@ -1,0 +1,15 @@
+<h3 mat-dialog-title class="modal-title">Link to Template</h3>
+<mat-dialog-content class="modal-body">
+  <clr-radio-container>
+    <label>Select a template to link</label>
+    <clr-radio-wrapper *ngFor="let temp of (unMatched$ | async)">
+      <input type='radio' clrRadio [value]="temp._id" name="templates" [(ngModel)]="selected" />
+      <label><strong>{{temp.payee}}</strong> - {{temp.amount | absolute | currency:'USD':'symbol':'1.2-2'}}</label>
+    </clr-radio-wrapper>
+    <clr-control-error>At least one template must be selected</clr-control-error>
+  </clr-radio-container>
+</mat-dialog-content>
+<mat-dialog-actions class="modal-footer">
+    <button type="button" class="btn btn-outline" [mat-dialog-close]="false">Cancel</button>
+    <button type="button" class="btn btn-primary" [mat-dialog-close]="true" (click)="linkSelected()">Ok</button>
+</mat-dialog-actions>

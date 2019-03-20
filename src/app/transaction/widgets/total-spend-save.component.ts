@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Summary } from '../models/summary.model';
-import { SummaryStore } from './summary.store';
+import { Summary } from '../../models/summary.model';
+import { TransactionSummaryStore } from '../transaction-summary.store';
 
 @Component({
   selector: 'okb-total-spend-save',
@@ -15,7 +15,7 @@ export class TotalSpendSaveComponent implements OnInit {
 
   public gainLoss = 0;
 
-  constructor(private summaryStore: SummaryStore) {
+  constructor(private summaryStore: TransactionSummaryStore) {
     this.summaryData$ = this.summaryStore.typeSummary$;
     this.summaryData$.subscribe( summaries => this.gainLoss = summaries.map( s => s.total).reduce( (total, num) => total + num, 0));
 

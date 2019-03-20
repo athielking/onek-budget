@@ -50,5 +50,6 @@ async function patch(req, res) {
 }
 
 async function remove(req, res) {
-  await tranCtrl.remove(req.params['id']);
+  let rem = await tranCtrl.remove(req.params['id']);
+  res.json(rem);
 }

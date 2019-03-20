@@ -1,28 +1,16 @@
-<!-- <div class="flex-row flex" style="height: 100%"> -->
-    <!-- <div class="flex-column flex flex-center alert"
-        [ngClass]="statusClass"
-        style="border: 0px; color: rgba(0,0,0,0); background: rgba(0,0,0,0)">
-        <div class="alert-icon-wrapper">
-            <clr-icon *ngIf="params.value === status.Success || !params.value" class="alert-icon" shape="check-circle"></clr-icon>
-            <clr-icon *ngIf="params.value === status.Pending" class="alert-icon" shape="switch"></clr-icon>
-            <clr-icon *ngIf="params.value === status.Error" class="alert-icon" shape="exclamation-circle"></clr-icon>
-        </div>
-    </div> -->
+<button type="button" class="btn btn-icon btn-link" [matMenuTriggerFor]="menu">
+    <clr-icon shape="ellipsis-vertical"></clr-icon>
+</button>
+<mat-menu #menu="matMenu" xPosition="before">
+    <button *ngIf="!params.value" mat-menu-item (click)="linkTransaction()">
+        <span>Link</span>
+    </button>
+    <button *ngIf="params.value" mat-menu-item (click)="unlinkTransaction()">
+        <span>UnLink</span>
+    </button>
+    <button mat-menu-item (click)="deleteTransaction()">
+        <span>Delete</span>
+    </button>
+</mat-menu>
 
-    
-        <button type="button" class="btn btn-icon btn-link" [matMenuTriggerFor]="menu">
-            <clr-icon shape="ellipsis-vertical"></clr-icon>
-        </button>
-        <mat-menu #menu="matMenu" xPosition="before">
-            <button *ngIf="!params.value" mat-menu-item (click)="linkTransaction()">
-                <span>Link</span>
-            </button>
-            <button *ngIf="params.value" mat-menu-item (click)="unlinkTransaction">
-                <span>UnLink</span>
-            </button>
-            <button mat-menu-item (click)="deleteTransaction()">
-                <span>Delete</span>
-            </button>
-        </mat-menu>
-    
-<!-- </div> -->
+<ng-template #dialogPrompt></ng-template>

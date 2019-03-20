@@ -9,13 +9,19 @@ import { TransactionListComponent } from './transaction-list.component';
 import { TransactionService } from './transaction.service';
 import { TransactionStore } from './transaction.store';
 import { AuthGuard } from '../core/auth.guard';
-
+import { TransactionSummaryService } from './transaction-summary.service';
+import { TransactionSummaryStore } from './transaction-summary.store';
+import { TotalSpendSaveComponent } from './widgets/total-spend-save.component';
+import { TypeSummaryComponent } from './widgets/type-summary.component';
+import { TemplateTransactionComponent } from './widgets/template-transaction.component';
 
 @NgModule({
   declarations: [
     TransactionListComponent,
     TransactionHeaderComponent,
-
+    TemplateTransactionComponent,
+    TotalSpendSaveComponent,
+    TypeSummaryComponent,
   ],
   imports: [
     CommonModule,
@@ -26,7 +32,9 @@ import { AuthGuard } from '../core/auth.guard';
   ],
   providers: [
       TransactionService,
-      TransactionStore
+      TransactionStore,
+      TransactionSummaryService,
+      TransactionSummaryStore,
   ],
   bootstrap: [],
   exports: [

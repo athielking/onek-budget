@@ -1,14 +1,10 @@
 import { Component, OnInit, ElementRef, Renderer2, HostBinding } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Transaction } from '../models/transaction.model';
-import { TransactionType, StorageKeys } from '../shared/constants';
+import { TransactionType } from '../shared/constants';
 import { CategoriesStore } from '../shared/categories.store';
 import { TransactionStore } from './transaction.store';
 import { AgGridHelper } from '../shared/grid/ag-grid.helper';
-import { StorageService } from '../shared/storage.service';
-
-import * as moment from 'moment';
-import { SummaryStore } from '../shared/summary.store';
 
 @Component({
   selector: 'okb-transaction-list',

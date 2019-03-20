@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, Renderer2 } from '@angular/core';
+import { Component, OnInit, ElementRef, Renderer2, HostBinding } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Template } from '../models/template.model';
 import { TransactionType } from '../shared/constants';
@@ -21,6 +21,8 @@ export class TemplateListComponent implements OnInit {
 
   private gridApi;
   private columnApi;
+
+  @HostBinding('style.width') get width() { return '100%'; }
 
   constructor(private templateStore: TemplateStore,
               private categoriesStore: CategoriesStore,
@@ -54,7 +56,7 @@ export class TemplateListComponent implements OnInit {
           headerName: 'Day of Month',
           field: 'day',
           editable: true,
-          width: 150,
+          width: 145,
           colSpan: AgGridHelper.getColSpan,
           pinnedRowCellRenderer: 'addTemplate',
           suppressKeyboardEvent: AgGridHelper.suppressKeyboardEvent
@@ -63,14 +65,14 @@ export class TemplateListComponent implements OnInit {
           headerName: 'Recurs Every',
           field: 'recur',
           editable: true,
-          width: 150,
+          width: 145,
           suppressKeyboardEvent: AgGridHelper.suppressKeyboardEvent
         },
         {
-          headerName: 'Recurrence Period',
+          headerName: 'Period',
           field: 'recurrencePeriod',
           editable: true,
-          width: 175,
+          width: 135,
           cellEditor: 'selectEditor',
           cellEditorParams: {
             valuesFn: (rowData) => of(['months', 'weeks', 'days'])
@@ -81,13 +83,13 @@ export class TemplateListComponent implements OnInit {
           headerName: 'Paid To',
           field: 'payee',
           editable: true,
-          width: 200,
+          width: 180,
           suppressKeyboardEvent: AgGridHelper.suppressKeyboardEvent},
         {
           headerName: 'Amount',
           field: 'amount',
           editable: true,
-          width: 200,
+          width: 180,
           cellClassRules: {
             'income-transaction' : 'x > 0',
             'spent-transaction' : 'x < 0'

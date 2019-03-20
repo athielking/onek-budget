@@ -10,6 +10,7 @@ module.exports = router;
 
 router.post('/register', asyncHandler(register), login);
 router.post('/login', passport.authenticate('local', { session: false }), login);
+router.post('/logout', logout);
 router.get('/me', passport.authenticate('jwt', { session: false }), login);
 
 async function register(req, res, next) {
@@ -30,4 +31,9 @@ function login(req, res) {
 
   res.cookie('jwt', token, opts);
   res.json(user);
+}
+
+function logout(req, res) {
+  res.clearCookie('jwt');
+  res.status(204).end();
 }

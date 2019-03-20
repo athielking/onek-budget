@@ -1,3 +1,13 @@
+<ng-container *ngIf="loggedOut">
+    <clr-alert [clrAlertClosable]="true">
+        <clr-alert-item>
+            <span class="alert-text">
+                You have been logged out
+            </span>
+        </clr-alert-item>
+    </clr-alert>
+</ng-container>
+
 <div class="login-wrapper">
   <form class="login" [formGroup]="loginForm">
     <section class="title">
@@ -24,3 +34,4 @@
     </div>
   </form>
 </div>
+

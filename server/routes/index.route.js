@@ -3,7 +3,8 @@ const userRoutes = require('./user.route');
 const authRoutes = require('./auth.route');
 const transRoutes = require('./transaction.route');
 const templateRoutes = require('./template.route');
-const aggregateRoutes = require('./aggregate.route');
+const tranAggRoutes = require('./transaction.aggregate.route');
+const tempAggRoutes = require('./template.aggregate.route');
 
 const router = express.Router(); // eslint-disable-line new-cap
 
@@ -16,6 +17,7 @@ router.use('/auth', authRoutes);
 router.use('/user', userRoutes);
 router.use('/trans', transRoutes);
 router.use('/temp', templateRoutes);
-router.use('/agg', aggregateRoutes);
+router.use('/agg/tran', tranAggRoutes);
+router.use('/agg/temp', tempAggRoutes);
 
 module.exports = router;

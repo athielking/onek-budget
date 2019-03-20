@@ -7,9 +7,9 @@ import { Summary } from '../models/summary.model';
 @Injectable({
   providedIn: 'root'
 })
-export class SummaryService {
+export class TransactionSummaryService {
 
-  private serviceUri = 'http://localhost:4040/api/agg';
+  private serviceUri = 'http://localhost:4040/api/agg/tran';
   constructor(private httpClient: HttpClient) {}
 
   public getTypeAggregations(viewDate: Moment) {

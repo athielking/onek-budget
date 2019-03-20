@@ -6,16 +6,26 @@
         <span class="title">One-K Budget</span>
       </a>
     </div>
-    <div class="header-nav">
+    <div *ngIf="isLoggedIn" class="header-nav">
       <a class="nav-link" routerLink="/transaction" routerLinkActive="active">
         <span class="nav-text">Transactions</span>
       </a>
       <a class="nav-link" routerLink="/template" routerLinkActive="active">
         <span class="nav-text">Template Setup</span>
       </a>
-      <a class="nav-link" routerLink="/user/login" routerLinkActive="active">
-        <span class="nav-text">Login</span>
-      </a>
+    </div>
+    <div *ngIf="isLoggedIn" class="header-actions">
+        <clr-dropdown>
+            <button class="nav-icon" clrDropdownTrigger>
+                <clr-icon shape="user"></clr-icon>
+                <clr-icon shape="caret down"></clr-icon>
+            </button>
+            <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
+                <a href="..." clrDropdownItem>About</a>
+                <a href="..." clrDropdownItem>Preferences</a>
+                <a [routerLink]="['/user/logout']" clrDropdownItem>Log out</a>
+            </clr-dropdown-menu>
+        </clr-dropdown>
     </div>
   </header>
   <div class="content-container">

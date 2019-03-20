@@ -25,11 +25,20 @@ export class UserStore {
   }
 
   public login(formValue: any) {
-    this.userService.login(formValue).subscribe( (result: any) => {
+
+    const obs = this.userService.login(formValue);
+
+    obs.subscribe( (result: any) => {
       const user = new User(result.user);
       this.storageService.setItem(StorageKeys.userObj, JSON.stringify(user));
       this._user.next(user);
-    });
+    }, error => {} );
+
+    return obs;
+  }
+
+  public logout() {
+    this.userService.logout().subscribe( result => this._user.next(null));
   }
 
   public isLoggedIn(): Observable<boolean> {

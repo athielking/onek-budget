@@ -16,7 +16,12 @@ import { LoginComponent } from './login.component';
     SharedModule,
     RouterModule.forChild([
       { path: 'register', component: RegisterUserComponent },
-      { path: 'login', component: LoginComponent }
+      { path: 'login', component: LoginComponent },
+      { path: 'logout', component: LoginComponent,
+        data: {
+          logout: true
+        }
+      }
     ])
   ],
   providers: [

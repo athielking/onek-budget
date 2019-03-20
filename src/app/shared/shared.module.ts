@@ -14,14 +14,12 @@ import { StatusRendererComponent } from './grid/status-renderer.component';
 import { CategoriesStore } from './categories.store';
 import { CategoriesService } from './categories.service';
 import { AddTemplateRendererComponent } from './grid/add-template-renderer.component';
-import { TotalSpendSaveComponent } from './total-spend-save.component';
-import { TypeSummaryComponent } from './type-summary.component';
-import { TemplateTransactionComponent } from './template-transaction.component';
 import { RouterModule } from '@angular/router';
 import { TemplateStore } from './template.store';
 import { TemplateService } from 'ag-grid-community';
-import { SummaryStore } from './summary.store';
-import { SummaryService } from './summary.service';
+import { DeletePromptComponent } from './dialog/delete-prompt.component';
+import { LinkComponent } from './dialog/link.component';
+import { LinkStore } from './link.store';
 
 @NgModule({
   declarations: [
@@ -33,9 +31,8 @@ import { SummaryService } from './summary.service';
     AutocompleteEditorComponent,
     CurrencyRendererComponent,
     StatusRendererComponent,
-    TotalSpendSaveComponent,
-    TypeSummaryComponent,
-    TemplateTransactionComponent
+    DeletePromptComponent,
+    LinkComponent
   ],
   imports: [
     CommonModule,
@@ -52,7 +49,8 @@ import { SummaryService } from './summary.service';
       StatusRendererComponent
   ]),
   ],
-  providers: [StorageService, CategoriesService, CategoriesStore, TemplateStore, TemplateService, SummaryStore, SummaryService],
+  providers: [StorageService, CategoriesService, CategoriesStore, TemplateStore, TemplateService, LinkStore],
+  entryComponents: [DeletePromptComponent, LinkComponent],
   bootstrap: [],
   exports: [
     CoreModule,
@@ -64,9 +62,6 @@ import { SummaryService } from './summary.service';
     AutocompleteEditorComponent,
     CurrencyRendererComponent,
     StatusRendererComponent,
-    TotalSpendSaveComponent,
-    TypeSummaryComponent,
-    TemplateTransactionComponent
   ]
 })
 export class SharedModule { }

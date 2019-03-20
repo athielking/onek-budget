@@ -6,9 +6,7 @@ import { map, filter } from 'rxjs/operators';
 import { StorageService } from '../shared/storage.service';
 import { StorageKeys, TransactionStatus } from '../shared/constants';
 import * as moment from 'moment';
-import { Moment } from 'moment';
-import { strict } from 'assert';
-import { SummaryStore } from '../shared/summary.store';
+import { TransactionSummaryStore } from './transaction-summary.store';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +22,7 @@ export class TransactionStore {
 
   constructor(private transactionService: TransactionService,
               private storageService: StorageService,
-              private summaryStore: SummaryStore) {
+              private summaryStore: TransactionSummaryStore) {
 
     this._changes = new Map<string, any>();
 
@@ -55,6 +53,30 @@ export class TransactionStore {
       transaction._id = result['_id'];
       this._transactions.next([...values, transaction]);
       this.summaryStore.loadAll();
+    });
+  }
+
+  public deleteTransaction( id: string ) {
+    const values = this._transactions.getValue();
+    const index = values.findIndex( t => t._id === id);
+    if ( index >= 0 ) {
+      values.splice(index, 1);
+    }
+
+    this.transactionService.deleteTransaction(id).subscribe( result => {
+      this._transactions.next( [...values]);
+    });
+  }
+
+  public patchTransaction(id: string, changes: any) {
+    const values = this._transactions.getValue();
+    const trans = values.find( t => t._id === id);
+    if (trans) {
+      Object.assign(trans, changes);
+    }
+
+    this.transactionService.patchTransaction(id, changes).subscribe(result => {
+      this._transactions.next([...values]);
     });
   }
 

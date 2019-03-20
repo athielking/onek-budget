@@ -65,7 +65,12 @@ async function put(id, transaction) {
 }
 
 async function patch(id, changes) {
-  return await Transaction.findByIdAndUpdate(id, {$set: changes});
+
+  if (Object.keys(changes).findIndex( k => k === 'templateId') && !changes.templateId) {
+    return await Transaction.findOneAndUpdate({_id: id}, {$set: changes, $unset: {templateId: 1}});
+  }
+
+  return await Transaction.findOneAndUpdate({_id: id}, {$set: changes});
 }
 
 async function remove(id) {

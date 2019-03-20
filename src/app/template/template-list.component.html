@@ -1,34 +1,35 @@
-<!-- <nav class="subnav">
-  <div class="flex-row flex" style="margin-left: 8px;">
-    <button class="btn btn-sm" (click)="togglePinnedDiv(true)">Add Transaction Template</button>
-  </div>
-</nav> -->
 
-  <div class="card" style="margin-bottom: 1rem">
-    <div class="card-header">
-        Transaction Templates
-    </div>
-    <div class="card-block">
-        <div class="card-text">
-            Transaction Templates are used to quickly add recurring monthly transactions; an installment loan or rent for example.
-            You'll still need to manually add each transaction, but you'll be reminded if one of your scheduled transactions does not match a transaction for that month.
-        </div>
-    </div>
-    <div class="card-footer">
-      <button class="btn btn-sm" (click)="togglePinnedDiv(true)">Add Transaction Template</button>
-    </div>
+<div style="height:100%;" class="flex-row flex">
+
+  <div class="sidenav flex-column widget-container">
+    <okb-template-summary></okb-template-summary>
   </div>
 
-<ag-grid-angular
-  #agGrid
-  style="height: 100%; width: 100%"
-  class="ag-theme-material"
-  [rowData]="rowData | async"
-  [columnDefs]="columnDefs"
-  [frameworkComponents]="frameworkComponents"
-  [pinnedTopRowData]="newTransactionData"
-  [context]="context"
-  [getRowHeight]="getRowHeight"
-  (gridReady)="onGridReady($event)"
-  (cellValueChanged)="onCellValueChanged($event)">
-</ag-grid-angular>
+  <div style="width: 100%">
+    <header class="header header-2 flex-row flex">
+      <div class="branding">
+        <span class="title">Transaction Templates</span>
+      </div>
+      <div class="header-actions">
+        <a [routerLink]="" class="nav-link" matToolTip="Add Template" (click)="togglePinnedDiv(true)">
+            <span class="nav-text">Add Template</span>
+        </a>
+      </div>
+    </header>
+    
+    <ag-grid-angular
+      #agGrid
+      style="height:calc(100% - 65px); width: 100%"
+      class="ag-theme-material"
+      [rowData]="rowData | async"
+      [columnDefs]="columnDefs"
+      [frameworkComponents]="frameworkComponents"
+      [pinnedTopRowData]="newTransactionData"
+      [context]="context"
+      [getRowHeight]="getRowHeight"
+      (gridReady)="onGridReady($event)"
+      (cellValueChanged)="onCellValueChanged($event)">
+    </ag-grid-angular>
+  </div>
+</div>
+
